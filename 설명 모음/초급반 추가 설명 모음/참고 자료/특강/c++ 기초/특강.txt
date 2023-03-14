@@ -1,0 +1,77 @@
+
+1. cout보다 printf가 속도가 더 빠르다
+
+
+2. enum도 char, int 형 등 변화시킬 수 있다 (기본적으로 int 형 = 4byte) 
+ => ex. enum ENUM : char (255개(enum의 byte의 범위)만 만들수 있게 된다)
+ => 즉, 크기에 따라 열거시킬 수 있는 갯수가 다르다.
+ => define은 디버깅할 때 찾기 힘들 수도 있다.
+
+
+3. 정수 타입은 int, 소수 타입은 float이 처리속도가 빠르다
+
+
+4. 포인터 : 할당된 메모리의 주소값
+
+
+5.상수화
+int a = 1;
+int b = 2;
+
+int* const ptr1 = &a; // 상수 포인터 : 주소를 상수화
+const int* ptr2 = &a; // 포인터 상수 : 포인터를 따라간 변수를 상수화
+	
+*ptr1 = 5; // 주소 값이 고정되므로 주소를 따라간 변수 값을 바꾼다한들 오류는 뜨지 않는다.
+*ptr2 = 5; // 오류 : 들어있는 값이 상수화 되어있으므로 오류가 뜨게 된다.
+
+ptr1 = &b;  // 오류 : 주소가 상수화 되어있으므로 오류가 뜨게 된다.
+ptr2 = &b; // 주소 자체는 상수화 되어있지 않으므로 바꿀 수 있다.
+
+
+6. struct, class의 차이점
+ - Class는 접근제한자, 접근한정자가 있다.
+ - Ex) public, protected, private(Default 접근제한자)
+
+
+7. 생성자 오버로딩했을 때 먼저 생성된 객체가 가장 나중에 소멸자가 호출된다.
+
+
+8. const 차이점
+
+int GetAttack() const { return Attack; } : 정상 작동한다
+// {} 스코프 안에 있는 범위에서 값을 변화시키지 못한다.
+// int* GetAttack() const { return &Attack; } // 얘도 오류 -> Attack은 int 정수형인데 포인터로 반환하려하기 때문
+// { return &Attack } : 오류 -> 상수인 Attack을 주소로 바꾸려고 하기 때문
+// { return Attack++ } : 오류 -> 상수인 Attack의 값을 바꾸려고 하기 때문
+
+const int* GeAttack() {  return &Attack; }
+// 값을 반환할 때 반환 된 그 값을 변화시키지 못하게 const 형태로 반환시켜준다.
+// 그렇기 때문에 받을 떄도 상수화시킨 const 변수로 return값을 받아줘야 한다.
+// { return &Attack } : 정상 작동한다
+// { return &(++Attack) } : 정상 작동한다
+// { return &(Attack++) } : 오류 -> 
+
+Q : 얘는 왜 되냐?
+const int GetAttack() { return Attack; }
+int a = sword.GettAttack();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

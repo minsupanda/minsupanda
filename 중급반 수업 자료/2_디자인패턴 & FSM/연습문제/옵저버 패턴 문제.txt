@@ -1,0 +1,41 @@
+필요 Class
+(Subject)
+--필요 순수가상함수 : 옵저버 추가 함수, 옵저버 정보 업데이트 함수	
+(Observer)
+--필요 순수가상함수 : 정보 업데이트 함수, 정보 출력 함수
+
+(News:뉴스)
+Subject Class 상속
+싱글톤으로 제작
+--필요 함수
+1.News 정보 업데이트 함수 
+2.옵져버들 정보 출력 함수
+--필요 변수
+1.날짜 변수
+2.뉴스 정보 저장 변수
+3.옵저버 vector 변수
+
+(Person:고객)
+Observer 상속
+--필요 변수
+1.이름 변수
+2.뉴스 변수
+3.날짜 변수
+
+( 입력 받을 시 현재시간 실시간으로 받는 기능 추가)
+#include <time.h>
+string currentDateTime() //현재 시간 받는 함수.
+{
+    time_t now = time(0); //현재 시간을 time_t 타입으로 저장.
+    struct tm tstruct;
+    tstruct = *localtime(&now);
+    char buf[80];
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct); // YYYY-MM-DD.HH:mm:ss
+
+    return buf;
+}
+
+1.고객등록 : 고객정보(이름)을 등록
+2.News 전송 : 최신 업데이트 뉴스를 적용
+3.News 업데이트 : 최신 정보를 작성, 작성 시간 보관
+4.News 시청 : 전송된 News를 고객들이 시청

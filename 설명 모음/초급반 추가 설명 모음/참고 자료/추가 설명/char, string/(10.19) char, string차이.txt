@@ -1,0 +1,19 @@
+
+string str;
+string* str1 = new string;
+*str1 = str;
+
+cout << str;
+cout << *str;
+
+string은 배열, 즉 주소를 사용하는 체계가 아니기 때문에 포인터를 사용해줘야한다.
+(안에서 배열을 관리하는 기능을 하지 string자체는 주소를 가지지 않기때문)
+
+char st[256];
+char* st1 = new char[256]
+
+cout << str;
+cout << str;
+
+char은 애당초 얘가 시작주소를 가지고 주소체계로 접근해 출력을 하는 애(NULL을 만날때 까지 출력)
+그렇기 때문에 여기서 한번더 *를 붙여 출력을 시킨다면 시작주소를 따라가는 것이기 때문에 문자 하나만 출력이 되는 것

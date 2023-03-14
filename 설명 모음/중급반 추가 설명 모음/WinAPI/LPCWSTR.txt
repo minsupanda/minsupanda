@@ -1,0 +1,17 @@
+  case WM_PAINT: // 강사님 수업자료 DC부터 같이 보기!!!!
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &ps);
+            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            
+            SetTextColor(hdc, RGB(255, 0, 0));
+            SetBkColor(hdc, RGB(0, 0, 0));
+            
+            //std::wstring str = L"TEST test TEST test";
+            std::string str = "TEST test TEST test";
+            TextOutA(hdc, 10, 10, str.c_str(), str.length());
+            // 지금 유니코드로 설정되어 있음.
+            // TextOut 3번째 인자 타입 : LPCWSTR
+            // => LongPointConstWideString = const wchar_t* => 유니코드 환경?
+            // str => const char* => 멀티바이트 환경?
+        }

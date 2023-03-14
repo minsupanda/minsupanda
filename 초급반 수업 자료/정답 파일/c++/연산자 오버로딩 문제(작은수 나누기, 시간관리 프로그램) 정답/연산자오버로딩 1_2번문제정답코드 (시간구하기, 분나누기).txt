@@ -1,0 +1,82 @@
+#include <iostream>
+#include<Windows.h>
+using namespace std;
+
+class Time
+{
+private:
+	int m_iHour;
+	int m_iMin;
+public:
+	void ShowTime();
+	Time operator + (Time time);
+	Time();
+	Time(int Hour,int Min);
+	~Time();
+};
+
+void Time::ShowTime()
+{
+	cout << m_iHour << " : " << m_iMin << endl;
+}
+
+Time Time::operator + (Time time)
+{
+	Time tmp;
+	tmp.m_iMin = this->m_iMin + time.m_iMin;
+	tmp.m_iHour = this->m_iHour + time.m_iHour;
+	if (tmp.m_iMin >= 60)
+	{
+		int itmp = tmp.m_iMin / 60;
+		tmp.m_iHour += itmp;
+		tmp.m_iMin -= itmp * 60;
+	}
+	return tmp;
+}
+
+Time::Time(int Hour, int Min)
+{
+	m_iHour = Hour;;
+	m_iMin = Min;
+}
+Time::Time() {}
+Time::~Time() {}
+
+void main() 
+{
+	Time time(0, 0);
+	int Hour, Min;
+	int Day = 1;
+	int Select;
+	while (1)
+	{
+		system("cls");
+		cout << " 총 공부 시간 : "; 
+		time.ShowTime();
+		cout << "=====공부 시간 관리 프로그램(" << Day << "Day)=====" << endl;
+		cout << "              1.시간 등록" << endl;
+		cout << "              2.종료" << endl;
+		cout << "              입력 : ";
+		cin >> Select;
+		switch (Select)
+		{
+		case 1:
+		{
+			cout << "시간 : ";
+			cin >> Hour;
+			cout << "분 : ";
+			cin >> Min;
+			Day++;
+			Time tmptime(Hour, Min);
+			time = time + tmptime;
+		}
+			break;
+		case 2:
+			system("cls");
+			cout << "총 공부 시간 : ";
+			time.ShowTime();
+			system("pause");
+			return;
+		}
+	}
+}

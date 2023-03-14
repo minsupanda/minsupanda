@@ -1,0 +1,62 @@
+[try catch] : 예외처리
+- try catch문은 프로그램상 논리적인 오류가 발생할 것 같을 때 그 값을 throw해 catch문으로 받는것
+
+[예제코드]
+try
+{
+	오류가 발생할 수 있는 부분
+	throw 발생한 오류정보
+}
+catch(매개변수)
+{
+	예외처리
+}
+
+--------------------------------
+
+int main()
+{
+std::cout << "==== start ====" << std::endl;
+try
+{
+int a, b;
+std::cout << "분자(a):";
+std::cin >> a;
+std::cout << "분모(b):";
+std::cin >> b;
+
+if (0 == b) throw b; // 여기서 thorw가 던져지면 밑의 코드들은 스킵하고 catch 문으로 바로 건너 띄게 된다.
+
+std::cout << "a : " << a << ", b : " << b << std::endl;
+std::cout << "a / b : " << a / b << std::endl;
+}
+catch (int ex)
+{
+std::cout << "Exception!!!" << std::endl;
+std::cout << ex << " is can't used value!!" << std::endl;
+// 여기서 작업을 종료시키며 오류 내용을 출력해 디버깅하는데 유용하게 사용할 수 있다
+}
+std::cout << "===== End =====" << std::endl;
+}
+
+----------------------------------------------
+
+catch (std::exception ex)
+- std::exception은 프로그램에서 지원하는 함수 등에서 발생된 에러를 받아준다 (자료구조 등)
+- ex.what()로 발생한 예외의 내용을 알 수 있다
+ -> what()으로 오류 내용을 출력시켜 어디서 오류가 터졌는지 알 수 있다.
+
+---------------------------------------------------------------
+
+[assert] : try catch와 동일한 기능
+
+- 사용 예시
+assert(m_pCurrState && pState);
+두 조건다 NULL(0값 즉, false)이면 throw를 해라!
+-오류가 터지면서 어디서 오류 터졌는지 알 수 있다
+ -> 다만, 정확하게 오류가 발생한 지점에 대해서는 알 수가 없기 때문에 try catch문을 활용한다면 해결이 가능하다 (추후 설명 추가)
+
+----------------------------------
+
+
+

@@ -1,0 +1,36 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>//시간 값 사용하는 헤더파일
+#define LOTTO_NUM 6
+#define TRUE 1
+#define FALSE 0
+void main()
+{
+	int Flag;
+	int RNum;
+	int Lotto[LOTTO_NUM] = { 0 };
+	srand(time(NULL));
+	while (1)
+	{
+		system("cls");
+		for (int i = 0; i < LOTTO_NUM;i++)
+		{
+			do
+			{
+				Flag = TRUE;
+				Lotto[i] = (rand() % 6) + 1;
+				for (int j = 0; j < i; j++)
+				{
+					if (Lotto[i] == Lotto[j])
+					{
+						Flag = FALSE;
+						break;
+					}
+				}
+			} while (Flag == FALSE);
+		}
+		for (int i = 0; i < LOTTO_NUM; i++)
+			printf("%d.%d\n", i + 1, Lotto[i]);
+		system("pause");
+	}
+}

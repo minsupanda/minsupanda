@@ -1,0 +1,16 @@
+class EnterMineAndDigForNugget : public State
+{
+private: // 생성자, 복사생성자, 오퍼레이터 모두 private로 막아서 중복생성을 막은 것
+	EnterMineAndDigForNugget() {}
+	EnterMineAndDigForNugget(const EnterMineAndDigForNugget&); // 이 매개변수가 뭔 역할인지 모르겠음.. 복사생성자인 건 알겠는데 그냥 매개변수 받는 형태를 클래스 형태로 해두면 막아진다는 건가..? 
+	EnterMineAndDigForNugget& operator=(const EnterMineAndDigForNugget&); // 반환형태가 클래스타입인 오퍼레이터(매개변수는 복사생성자랑 같음?)
+	// 생성자, 복사생성자,operator=('=')대입연사자 모두 막아 생성을 제한한것
+public:
+	static EnterMineAndDigForNugget* Instance(); // 싱글톤 패턴
+
+	virtual void Enter(Miner*);
+	virtual void Excute(Miner*);
+	virtual void Exit(Miner*);
+	// EnterMineAndDigForNugget a = *EnterMineAndDigForNugget::Instance(); 이 것을 막는것 (오퍼레이터 연산자에서 반환형태는 크게 의미를 가지지 않는다)
+	// '=' 이 대입연사자 자체를 막아 EnterMineAndDigForNugget 형태의 타입 저장을 완전히 막아 생성을 막는 것!
+};

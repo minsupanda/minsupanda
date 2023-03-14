@@ -1,0 +1,58 @@
+Vector3 dir = target.position - transform.position;
+// 타겟 방향으로 회전함
+float angle = Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg;
+transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+
+
+void Update() {
+        if (target != null) {         
+            Vector2 direction = new Vector2(
+                transform.position.x - target.position.x,
+                transform.position.y - target.position.y
+            );
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion angleAxis = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+            Quaternion rotation = Quaternion.Slerp(transform.rotation, angleAxis, rotateSpeed * Time.deltaTime);
+            transform.rotation = rotation;
+        }
+    }
+
+
+
+IEnumerator LookAt_Object_2DHoming( float _HomingTime )
+    {
+        //  음수 시간을 막기 위한 방지
+        if(_HomingTime < 0 )
+        {
+            _HomingTime = 1;
+        }
+ 
+        Vector3 StartPos    = transform.up;
+        Vector3 EndPos      = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        EndPos.z = transform.position.z;
+        EndPos.Normalize();
+ 
+        //  180도 회전에 걸리는 시간을 기준으로 실제 이동 시간 조정 ( 내적을 활용함 )
+        float Dot = Vector3.Dot(StartPos, EndPos);
+        _HomingTime *= (1 - Dot)/2;
+ 
+        float Rate = 0;
+ 
+        while(Rate < 1)
+        {
+            Rate += Time.deltaTime / _HomingTime;
+ 
+            if( Rate > 1 )
+            {
+                Rate = 1;
+            }
+ 
+            transform.up = Vector3.Slerp(StartPos, EndPos, Rate);
+ 
+            yield return null;
+        }
+ 
+        yield return null;
+    }

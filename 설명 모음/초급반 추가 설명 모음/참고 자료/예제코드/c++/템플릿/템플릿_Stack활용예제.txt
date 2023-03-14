@@ -1,0 +1,92 @@
+#include<iostream>
+#include<stack>
+
+template <typename type>
+class Stack
+{
+	struct node
+	{
+		type value;
+		node* next;
+	};
+private:
+	node* m_pTop;
+	int m_iSize;
+public:
+	Stack();
+	~Stack();
+	void Push(type value);
+	void Pop();
+	type Top();
+	bool Empty();
+	int Size();
+};
+
+void main()
+{
+	Stack<int> MyStack;
+	for (int i = 0; i < 10; i++)
+	{
+		MyStack.Push(i);
+		std::cout << "Top : " << MyStack.Top() << std::endl;;
+	}
+	while (MyStack.Empty() == false)
+	{
+		std::cout << "Top : " << MyStack.Top() << std::endl;
+		MyStack.Pop();
+	}
+}
+
+template<typename type>
+Stack<type>::Stack()
+{
+	m_iSize = 0;
+	m_pTop = nullptr;
+}
+
+template<typename type>
+Stack<type>::~Stack()
+{
+	while (m_pTop != nullptr)
+		Pop();
+}
+
+template<typename type>
+void Stack<type>::Push(type value)
+{
+	node* pNewNode = new node;
+	pNewNode->value = value;
+	pNewNode->next = m_pTop;
+	m_pTop = pNewNode;
+	++m_iSize;
+}
+
+template<typename type>
+void Stack<type>::Pop()
+{
+	if (Empty() == true)
+		return;
+	
+	node* pPopNode = m_pTop;
+	m_pTop = m_pTop->next;
+	delete pPopNode;
+	--m_iSize;
+}
+
+template<typename type>
+type Stack<type>::Top()
+{
+	return m_pTop->value;
+}
+
+template<typename type>
+bool Stack<type>::Empty()
+{
+	return m_pTop == nullptr;
+}
+
+template<typename type>
+int Stack<type>::Size()
+{
+	return m_iSize;
+}

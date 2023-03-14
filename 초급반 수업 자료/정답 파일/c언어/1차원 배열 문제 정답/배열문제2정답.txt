@@ -1,0 +1,95 @@
+#include<stdio.h>
+#define SIZE 10
+#define EVEN 0
+#define ODD 1
+#define ASC 1
+#define DESC 2
+
+void SetReverse(int Arr[], int InverArr[], int Size)
+{
+	for (int i = 0, j = Size - 1; i < Size && j >= 0; i++, j--)
+		InverArr[i] = Arr[j];
+}
+
+void ShowArr(char str[], int Arr[])
+{
+	printf("%s : ", str);
+	for (int i = 0; i < SIZE; i++)
+		printf("%d,", Arr[i]);
+	printf("\b \n");
+}
+
+void AddArr(int Arr[], int EvenOrOddStatus, int Size)
+{
+	switch (EvenOrOddStatus)
+	{
+	case EVEN:
+		printf("짝수 : ");
+		break;
+	case ODD:
+		printf("홀수 : ");
+		break;
+	}
+	int Sum = 0;
+	for (int i = EvenOrOddStatus; i < Size; i += 2)
+	{
+		Sum += Arr[i];
+		printf("%d,", Arr[i]);
+	}
+	printf("\b \n");
+	printf("Sum = %d\n", Sum);
+}
+
+void CopyArray(int Array[], int CopyArray[], int size)
+{
+	for (int i = 0; i < size; i++)
+		Array[i] = CopyArray[i];
+}
+
+void SetSort(int SortArr[], int Size, int SortStatus)
+{
+	for (int i = 0; i < Size - 1; i++)
+	{
+		for (int j = i + 1; j < Size; j++)
+		{
+			if ((SortStatus == DESC && SortArr[i] < SortArr[j])
+				|| (SortStatus == ASC && SortArr[i] > SortArr[j]))
+			{
+				int tmp = SortArr[i];
+				SortArr[i] = SortArr[j];
+				SortArr[j] = tmp;
+			}
+		}
+	}
+}
+
+void main()
+{
+	int arr[SIZE] = { 10,17,3,10,37,10,8,9,13,21 };
+	char ArrName[20] = "Arr";
+	printf("1번 문제\n");
+	ShowArr(ArrName, arr);
+
+
+	printf("2번문제\n");
+	int InvertArr[SIZE];
+	char InvertName[20] = "InverArr";
+	SetReverse(arr, InvertArr, sizeof(InvertArr) / sizeof(InvertArr[0]));
+	ShowArr(ArrName, arr);
+	ShowArr(InvertName, InvertArr);
+
+
+	printf("3번문제\n");
+	AddArr(arr, EVEN, sizeof(arr) / sizeof(arr[0]));
+	AddArr(arr, ODD, sizeof(arr) / sizeof(arr[0]));
+
+
+	printf("4번문제\n");
+	int SortArr[SIZE];
+	char SortName[20] = "SortArr";
+	CopyArray(SortArr, arr, sizeof(SortArr) / sizeof(SortArr[0]));
+	SetSort(SortArr, sizeof(SortArr) / sizeof(SortArr[0]), DESC);
+	ShowArr(ArrName, arr);
+	ShowArr(SortName, SortArr);
+
+}

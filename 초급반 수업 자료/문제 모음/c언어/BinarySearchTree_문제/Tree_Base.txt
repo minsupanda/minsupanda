@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<Windows.h>
+#include<stdlib.h>
+//2진탐색트리,B Tree,AVL Tree, 레드 블랙Tree
+#define WIDTH_VALUE 15
+#define HEIGHT_VALUE 4
+
+typedef struct Node
+{
+	int Data;
+	struct Node* Left;
+	struct Node* Right;
+}Node;
+
+void gotoxy(int x, int y); //전방 선언
+void RightPrint(Node* node, int x, int y, int i);
+void LeftPrint(Node* node, int x, int y, int i);
+void Print_Tree(Node* node);
+
+//WinAIP -> 마이크로소프트사에서 제공하는 윈도우즈 컨트롤 함수 모음
+void gotoxy(int x, int y)//원하는 좌표로 커서를 이동해 주는 함수
+{
+	COORD pos = { x,y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void RightPrint(Node* node, int x, int y, int i)
+{
+	if (node == NULL)
+		return;
+	x += WIDTH_VALUE - i;
+	y += HEIGHT_VALUE;
+	gotoxy(x, y);
+	printf("%d", node->Data);
+	RightPrint(node->Right, x, y, i + 6);
+	LeftPrint(node->Left, x, y, i + 6);
+}
+
+void LeftPrint(Node* node, int x, int y, int i)
+{
+	if (node == NULL)
+		return;
+	x -= WIDTH_VALUE - i;
+	y += HEIGHT_VALUE;
+	gotoxy(x, y);
+	printf("%d", node->Data);
+	RightPrint(node->Right, x, y, i + 6);
+	LeftPrint(node->Left, x, y, i + 6);
+}
+
+void Print_Tree(Node* node)
+{
+	system("cls");
+	int x = 70, y = 2;
+	if (node == NULL)
+		return;
+	gotoxy(x, y);
+	printf("%d", node->Data);
+	RightPrint(node->Right, x, y, 1);
+	LeftPrint(node->Left, x, y, 1);
+	gotoxy(0, 0);
+}
+void main()
+{
+	Node* Root = NULL;
+	int Data;
+	while (1)
+	{
+		printf("========Tree========\n");
+		printf("1.Insert\n");
+		printf("2.Print\n");
+		printf("3.PreOrder\n");
+		printf("4.InOrder\n");
+		printf("5.PostOrder\n");
+		printf("6.Delete\n");
+		printf("7.Search\n");
+		printf("8.Exit\n");
+		int Select;
+		printf("Input >> ");
+		scanf("%d", &Select);
+		switch (Select)
+		{
+		case 1:
+			break;
+		case 2:
+			Print_Tree(Root);
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			return;
+		}
+		system("pause");
+	}
+}

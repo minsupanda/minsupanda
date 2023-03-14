@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<conio.h>
+
+void main()
+{
+	int height, center = 0;
+	printf("세로 입력 : ");
+	scanf("%d", &height);
+	center = height + 1;
+	for (int y = 1; y <= height*2 + 3; y++)
+	{
+		for (int x = 1; x <= height * 2 + 1; x++)
+		{
+			if (y == 1 || y == (height*2) + 3)
+				printf("★");
+			else if (x == 1 || x == height * 2 + 1)
+				printf("★");
+			else if (y - 2 < center &&( center - (y - 2) == x || center + (y - 2) == x))
+				printf("★");
+			else if (y - 2 >= center && (y - 1 - height == x))
+				printf("★");
+			else if (y - 2 >= center && (height*2 -  (y - (3 + height)) == x))
+				printf("★");
+			else
+				printf("  ");
+		}
+		printf("\n");
+	}
+	getch();
+}

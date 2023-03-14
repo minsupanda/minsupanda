@@ -1,0 +1,28 @@
+#include<stdio.h>
+
+void main()
+{
+	printf("2번문제\n");
+	int SumMoney = 0;
+	for (int Day = 1, Money = 1; Day <= 30; Day++, Money *= 2)
+		SumMoney += Money;
+	printf("30일동안 저축한 금액 : %d\n", SumMoney);
+
+	printf("3번문제\n");
+	int Sum = 0;
+	for (int i = 0; i <= 1000; i++)
+	{
+		if (i % 3 != 0 || i % 5 == 0)
+				Sum += i;
+	}
+	printf("1 ~ 1000사이의 합 : %d \n(3의 배수는 제외하며 3과 5의 공배수는 제외하지 않는다)\n", Sum);
+
+	printf("4번문제.10000 을 넘기 직전의 수 \n");
+	Sum = 0;
+	int i;
+	for (i = 1; Sum + i < 10000; i += 2)
+	{
+		Sum += i;
+	}
+	printf(" i : %d,\t Sum : %d\n", i, Sum);
+}

@@ -1,0 +1,16 @@
+#include<stdio.h>
+
+void main()
+{
+	int Min, Price;
+	printf("승마 이용시간을 입력하시오 : ");
+	scanf("%d", &Min);
+	Price = 3000;
+	if(Min > 30)
+	{
+		Price += ((Min-30) / 10) * 500;
+		if (Min % 10)
+			Price += 500;
+	}
+	printf("%d분 탑승요금 : %d원", Min, Price);
+}

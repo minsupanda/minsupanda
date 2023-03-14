@@ -1,0 +1,7 @@
+#define UPATTACKSTAT 4
+
+Num = rand() % (UPATTACKSTAT + 1);
+m_iDamage += Num;
+Num = rand() % (UPATTACKSTAT + 1);
+m_iMaxHealth += Num;
+m_iMaxExp += m_iMaxExp * 0.3;

@@ -1,0 +1,60 @@
+class viewer : public Observer
+{
+private:
+	std::string name;
+public:
+	virtual void update() override
+	{
+		std::cout << name << "은(는) 새로운 정보를 확인했다!" << std::endl;
+	}
+
+	viewer(std::string name) :name(name) {}
+};
+class customer : public Observer
+{
+private:
+	Subject* sb;
+
+public:
+	customer(Subject* subject) : sb(subject) { this->sb->add(this); }
+
+	virtual void update() override { std::cout << "뉴스를 확인하고 피해 확인을 할 수 있었다!" << std::endl; }
+	void delete_subject() { this->sb->remove(this); this->sb = NULL; }
+	void chage_sbject(Subject* subject) { delete_subject(); this->sb = subject;  this->sb->add(this); }
+};
+
+class news : public Subject
+{
+public:
+	void news_report()
+	{
+		std::cout << "새로운 뉴스 정보!!" << std::endl;
+		notify();
+	}
+};
+
+
+int main()
+{
+	news* sb = new news;
+	viewer* v1 = new viewer("asd");
+	viewer* v2 = new viewer("qwe");
+	viewer* v3 = new viewer("zxc");
+	viewer* v4 = new viewer("poi");
+	customer* ctm = new customer(sb);
+
+	sb->add(v1);
+	sb->add(v2);
+	sb->add(v3);
+	sb->add(v4);
+
+	sb->news_report();
+
+
+	delete sb;
+	delete v1;
+	delete v2;
+	delete v3;
+	delete v4;
+	delete ctm;
+}

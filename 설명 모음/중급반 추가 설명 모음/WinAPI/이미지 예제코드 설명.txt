@@ -1,0 +1,52 @@
+switch (message)
+    {
+        // 보통 이미지 데이터를 불러오는 것은 WM_CREATE에서 삭제하는 것은 WM_DISTORY에서 실행한다.
+        // WM_PAINT에 넣을 경우? 윈도우 창에 이미지를 그릴때마다 계속해서 외부에서 이미지를 불러오고 삭제하는 과정을 반복하기 때문에
+        // 낭비가 생기게 되기 때문이다. 
+        // 그렇기 때문에 보통 게임에서는 그 씬에 맞는 이미지 데이터만 그때 불러오고 그 씬에서 벗어날때 삭제하는 식으로 진행된다
+        // WM_PAINT의 호출 조건이 윈도우 창이 아예 사라지거나 모니터 화면 밖으로 넘어가는 등일때 호출?
+        // 
+    case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hWnd, &ps);
+            // BeginPaint : GetDC의 역할을 해준다.
+            // 출력 기능을 얘가 맞고 있다
+            // HDC 형태가 출력 기능을 하는게 아니라 BeginPaoint로 발급받은 DC가 출력 역할을 하는 건가?
+            HDC memDC = CreateCompatibleDC(hdc);
+            // GetDC는 Window의 DC를 잠시 받아오는 거고, CreateCompatibleDC는 DC를 새로 만들어 사용하는 것이다.
+            // -> GetDC는 Release로 빌린걸 반납하는 거고, CreateCompatibleDC는 Delete로 만든것은 삭제해주어야 한다.
+            // 매개변수인 hdc(캔버스)에 호환되는 그림도구를 만드는 함수이다.
+            // 이렇게 Create로 만들어진 모든 DC들을 Memory DC라고 칭한다.
+            HBITMAP myBitmap = (HBITMAP)LoadImage(NULL, L"새 폴더\\00.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+            // 우선 WinAPI에서 사용가능한 이미지 확장자는 BitMap 뿐이기 때문에 IMAGE_BITMAP 이걸로 고정이 된다.
+            // 2번째 인자는 파일이 저장된 경로를 지정하고 마지막에 이미지 파일명을 넣는다.
+            // MAKEINTRESOURCE 메크로로 인자를 이미지 아이디 값을 넣고 불러올 수도 있지만 굳이 이렇게 하지는 않는다
+            // 위의 방식으로 진행할 경우에는 리소스 파일에 이미지 파일 가져오기해서 하는 방식
+            // 게임을 만들때 하는 모든 방식은 예제코드처럼 LOADFROMFILE을 사용해서 한다!!!
+            HBITMAP OldBitmap = (HBITMAP)SelectObject(memDC, myBitmap);
+            // SelectObject : memDC에 myBitmap에 저장된 핸들값?을 덮어쒸우는 것
+            // + 반환하는 자료는 myBitmap의 덮어쒸우기 전의 상태를 반환한다.
+            StretchBlt(hdc, 200, 200, 245, 345, memDC, 0, 0, 145, 245, SRCCOPY);
+            BitBlt(hdc, 0, 0, 145, 245, memDC, 0, 0, SRCCOPY);
+            // 두 함수 모두 memDC에 저장된 이미지 데이터를 hdc에게 출력해달라고 하는 것
+
+            // 만약 추가적으로 이미지를 출력하고 싶을때는
+            // SelectObject(memDC, OldBitmap);
+            // 이렇게 한번 깨끗한 상태로 초기화 해준후 그리기를 실행해야 한다.
+            SelectObject(memDC, OldBitmap); // 당장 예제코드에서는 필요없는 코드이지만 추가적으로 이미지를 출력하고 싶을때 해주어야 한다.
+            DeleteObject(myBitmap); // 불러온 이미지 데이터를 없애는 것
+            DeleteDC(memDC); // 만든 DC값을 없애는 것
+            EndPaint(hWnd, &ps);
+            // EndPaint : 화면상에 불러온 이미지를 출력하는 함수   
+            // StretchBlt 혹은 BitBlt 함수로 정리된 것을 출력 + 빌려온 DC를 해제하는 Release 역할도 함께 수행한다.
+    }
+        break;
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
+    return 0;
+}

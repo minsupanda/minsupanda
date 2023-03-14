@@ -1,0 +1,17 @@
+// left, bottom, width, height
+SetLimitPos(new Rect(-10, -10, 20, 20));
+
+void SetLimitPos(Rect limitRect)
+{
+    Camera cam = Camera.main;
+    cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 1, Mathf.Min(limitRect.width, limitRect.height) * 0.5f);
+
+    float height = 2 * cam.orthographicSize;
+    float width = height * cam.aspect;
+
+    Vector2 pos = cam.transform.position;
+    pos.x = Mathf.Clamp(pos.x, limitRect.xMin + width * 0.5f, limitRect.xMax - width * 0.5f);
+    pos.y = Mathf.Clamp(pos.y, limitRect.yMin + height * 0.5f, limitRect.yMax - height * 0.5f);
+
+    cam.transform.position = pos;
+}

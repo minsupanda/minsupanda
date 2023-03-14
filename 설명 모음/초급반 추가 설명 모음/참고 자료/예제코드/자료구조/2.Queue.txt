@@ -1,0 +1,24 @@
+//STL : Standard Template Library
+//Math,Sort,functional,container(자료구조 라이브러리)
+//stack,queue,list,vector,map
+#include<stdio.h>
+#include<stack>
+#include<queue>
+
+
+void main()
+{
+	std::queue<int> iQueue;
+
+	for (int i = 1; i <= 5; i++)
+	{
+		iQueue.push(i);
+		printf("Front : %d Rear : %d\n", iQueue.front(), iQueue.back());
+	}
+	printf("Size : %d\n", iQueue.size());
+	while (!iQueue.empty())
+	{
+		printf("Front : %d Rear : %d\n", iQueue.front(), iQueue.back());
+		iQueue.pop();
+	}
+}

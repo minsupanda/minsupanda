@@ -1,0 +1,1 @@
+$(SolutionDir)SDK include/lib 경로(path)

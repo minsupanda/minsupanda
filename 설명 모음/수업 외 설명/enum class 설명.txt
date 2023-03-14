@@ -1,0 +1,27 @@
+
+- 대문자만 쓰는 건 옛날방식
+- 소문자만 쓰거나 앞자리만 대문자를 붙히는 방식으로 해도 된다.
+
+
+enum class Location_Type
+{
+	shack,		// 판자집.
+	gold_mine,	// 금광.
+	bank,		// 은행.
+	saloon,		// 술집.
+	home, // 집
+	rectal, // 직장
+	colleague_table, // 동료 책상
+	cafeteria, // 카페
+	interview_room // 면접실
+};
+
+--------------------------------------------------
+
+enum Location_Type
+{
+	Location_Type_shack,		// 판자집.
+	Location_Type_gold_mine,	// 금광.
+};
+
+class를 붙히지 않는다면 이런식으로 이름을 붙혀줘야한다.

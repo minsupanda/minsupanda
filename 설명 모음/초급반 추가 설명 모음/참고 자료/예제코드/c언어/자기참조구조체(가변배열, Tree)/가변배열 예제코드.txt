@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<malloc.h>
+#include<stdlib.h>
+#include<time.h>
+
+#define START_MEMORY 10
+
+typedef struct DynamicArray
+{
+	int* pArray;//배열 포인터
+	int MaxCount;//최대 메모리 크기
+	int Count;//현재 데이터 갯수
+}DynamicArray;
+
+void InitMemory(DynamicArray* dynamicArray)
+{
+	dynamicArray->pArray = (int*)malloc(sizeof(int) * START_MEMORY);
+	dynamicArray->MaxCount = START_MEMORY;
+	dynamicArray->Count = 0;
+}
+
+void CreateMemory(DynamicArray* dynamicArray)
+{
+	//가변배열 : 기존의 1.2배 ~ 1.5배 증설
+	dynamicArray->MaxCount *= 1.5;
+	int* NewArray = (int*)malloc(sizeof(int) * dynamicArray->MaxCount);
+
+	for (int i = 0; i < dynamicArray->Count; i++)
+		NewArray[i] = dynamicArray->pArray[i];
+
+	free(dynamicArray->pArray);
+	dynamicArray->pArray = NewArray;
+}
+
+void AddData(DynamicArray* dynamicArray)
+{
+	if (dynamicArray->Count >= dynamicArray->MaxCount)
+	{
+		CreateMemory(dynamicArray);
+		printf("\n이사완료\n");
+	}
+	dynamicArray->pArray[dynamicArray->Count++] = rand() % 100 + 1;
+}
+
+void PrintData(DynamicArray dynamicArray)
+{
+	for (int i = 0; i < dynamicArray.Count; i++)
+		printf("%4d", dynamicArray.pArray[i]);
+	printf("\n");
+}
+
+void LeftMoveData(DynamicArray* dynamicArray, int i)
+{
+	int max = dynamicArray->Count - 1;
+	for (; i < max; i++)
+	{
+		dynamicArray->pArray[i] = dynamicArray->pArray[i + 1];
+	}
+}
+
+void DeleteData(DynamicArray* dynamicArray, int Data)
+{
+
+	for (int i = 0; i < dynamicArray->Count; i++)
+	{
+		if (dynamicArray->pArray[i] == Data)
+		{
+			LeftMoveData(dynamicArray, i);
+			--dynamicArray->Count;
+			break;
+		}
+	}
+}
+
+void main()
+{
+	srand(time(NULL));
+	DynamicArray dynamicArray;
+	InitMemory(&dynamicArray);
+
+	for (int i = 0; i < 20; i++)
+		AddData(&dynamicArray);
+
+	PrintData(dynamicArray);
+
+	DeleteData(&dynamicArray, 30);
+	PrintData(dynamicArray);
+
+	free(dynamicArray.pArray);
+}

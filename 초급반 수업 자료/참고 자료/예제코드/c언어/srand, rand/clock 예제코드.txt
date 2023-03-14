@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<Windows.h>
+#include<time.h>
+#define WIDTH 10
+#define HEIGHT 10
+#define STAR 1
+#define NULL 0
+#define SPEED 500
+
+void Draw(int Map[HEIGHT][WIDTH])
+{
+	system("cls");
+	for (int y = 0; y < HEIGHT; y++)
+	{
+		for (int x = 0; x < WIDTH; x++)
+		{
+			if (Map[y][x] == STAR)
+				printf("¡Ù");
+			else
+				printf("  ");
+		}
+		printf("\n");
+	}
+}
+
+void Update(int Map[HEIGHT][WIDTH])
+{
+	for (int x = 0; x < WIDTH; x++)
+	{
+		if (Map[0][x] == STAR)
+		{
+			for (int y = 0; y < HEIGHT; y++)
+			{
+				Map[y][x] = NULL;
+				if (x == 0)
+					Map[y][WIDTH - 1] = STAR;
+				else
+					Map[y][x - 1] = STAR;
+			}
+			break;
+		}
+	}
+}
+
+
+void main()
+{
+	int OldClock = clock();
+	int Map[HEIGHT][WIDTH] = { NULL };
+	for (int y = 0; y < HEIGHT; y++)
+	{
+		Map[y][WIDTH - 1] = STAR;
+	}
+	Draw(Map);
+	while (1)
+	{
+		if (clock() - OldClock >= SPEED)
+		{
+			Update(Map);
+			Draw(Map);
+			OldClock = clock();
+		}
+	}
+}

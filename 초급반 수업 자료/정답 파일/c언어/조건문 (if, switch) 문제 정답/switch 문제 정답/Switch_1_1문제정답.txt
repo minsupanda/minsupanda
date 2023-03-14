@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<Windows.h>
+
+void main()
+{
+	char Name[10];
+	int Kor, Eng, Math, Sum, Select;
+	int Name_Flag = 0, Score_Flag = 0;
+	float Avg;
+	while (1)
+	{
+		system("cls");
+		printf("====================\n");
+		printf("    학생성적관리\n");
+		printf("====================\n");
+		printf("   1.학생 이름등록\n");
+		printf("   2.3과목 점수등록\n");
+		printf("   3.점수확인\n");
+		printf("   4.종료\n");
+		printf("====================\n");
+		printf("입력 : ");
+		scanf("%d", &Select);
+		system("cls");
+		switch (Select)
+		{
+		case 1:
+			printf("이름 입력 : ");
+			scanf("%s", Name);
+			Name_Flag = 1;
+			break;
+		case 2:
+			printf("세과목의 성적을 입력하시오\n");
+			printf("국어 : ");
+			scanf("%d", &Kor);
+			printf("수학 : ");
+			scanf("%d", &Math);
+			printf("영어 : ");
+			scanf("%d", &Eng);
+			Sum = Kor + Math + Eng;
+			Avg = (float)Sum / 3.0;
+			Score_Flag = 1;
+			break;
+		case 3:
+			if (Score_Flag == 1 && Name_Flag == 1)
+			{
+				printf("=====================\n");
+				printf("%s님의 점수\n", Name);
+				printf("국어 점수 : %d\n", Kor);
+				printf("수학 점수 : %d\n", Math);
+				printf("영어 점수 : %d\n", Eng);
+				printf("합계 점수 : %d\n", Sum);
+				printf("평균 점수 : %.2f\n", Avg);
+				printf("=====================\n");
+			}
+			else
+			{
+				if (Score_Flag == 0)
+					printf("점수를 입력하세요\n");
+				if (Name_Flag == 0)
+					printf("이름을 입력하세요\n");
+			}
+			system("pause");
+			break;
+		case 4:
+			return;
+		}
+	}
+}

@@ -1,0 +1,45 @@
+-아이템
+1.워드속도 증가
+2.워드속도 감소
+3.워드일시정지
+4.화면 클리어
+5.워드가리기(1.5초)
+
+
+-랭킹시스템
+점수 내림차순 정렬
+저장,불러오기
+
+class
+Play class = 전체 게임 흐름 제어 Class
+WordManager Class = 단어들 관리 Class //단어는 파일입출력으로 가져옴
+Word = 단어 Class , 필요 맴버 변수 x,y,string 필요 맴버함수 draw drop Live Die
+Rank Class = Rank 시스템 관리 Class
+Interface Class = 전반적인 배경 그림 관리 Class
+
+만드는 순서
+
+게임시작 화면 만들기 -> 배경이야기 스크롤 만들기 -> 단어 떨어트리기 -> 단어 맞추기(점수증가) -> Stage기능 만들기 -> Rank시스템 만들기
+-> 아이템기능 추가
+
+#define col GetStdHandle(STD_OUTPUT_HANDLE) 
+#define BLACK SetConsoleTextAttribute( col,0x0000 );
+#define DARK_BLUE SetConsoleTextAttribute( col,0x0001 );
+#define GREEN SetConsoleTextAttribute( col,0x0002 );
+#define BLUE_GREEN SetConsoleTextAttribute( col,0x0003 );
+#define BLOOD SetConsoleTextAttribute( col,0x0004 );
+#define PUPPLE SetConsoleTextAttribute( col,0x0005 );
+#define GOLD SetConsoleTextAttribute( col,0x0006 );			//색상 지정
+#define ORIGINAL SetConsoleTextAttribute( col,0x0007 );
+#define GRAY SetConsoleTextAttribute( col,0x0008 );
+#define BLUE SetConsoleTextAttribute( col,0x0009 );
+#define HIGH_GREEN SetConsoleTextAttribute( col,0x000a );
+#define SKY_BLUE SetConsoleTextAttribute( col,0x000b );
+#define RED SetConsoleTextAttribute( col,0x000c );
+#define PLUM SetConsoleTextAttribute( col,0x000d );
+#define YELLOW SetConsoleTextAttribute( col,0x000e );
+
+std::string str;
+case KEY_BACKSPACE:
+str = str.substr(0, str.length() - 1);
+break;

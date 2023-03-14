@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<Windows.h>
+#define TRUE 1
+#define FALSE 0
+void Menu()
+{
+	system("cls");
+	printf("====뽑기 게임====\n");
+	printf("    1.1회 뽑기\n");
+	printf("    2.10+1회 뽑기\n");
+	printf("    3.종료\n");
+}
+
+void Gacha()
+{
+	int Num = rand() % 100;
+	if (Num >= 0 && Num < 60)
+		printf("N등급..\n");
+	else if (Num >= 60 && Num < 80)
+		printf("R등급!\n");
+	else if (Num >= 80 && Num < 90)
+		printf("SR등급!!\n");
+	else if (Num >= 90 && Num < 95)
+		printf("☆SSR등급☆\n");
+	else if (Num >= 95 && Num < 98)
+		printf("☆★!SSSR등급!★☆\n");
+	else
+	{
+		printf("☆★☆★☆★☆★☆★☆★\n");
+		printf("☆★☆★초 대 박☆★☆★\n");
+		printf("☆★☆★  U R  ☆★☆★\n");
+		printf("☆★☆★☆★☆★☆★☆★\n");
+	}
+}
+
+void main()
+{
+	int Exit = FALSE;
+	int Select;
+	srand(time(NULL));
+	while (!Exit)
+	{
+		Menu();
+		scanf("%d", &Select);
+		switch (Select)
+		{
+		case 1:
+			Gacha();
+			break;
+		case 2:
+			for (int i = 0; i < 11; i++)
+				Gacha();
+			break;
+		case 3:
+			Exit = TRUE;
+		}
+		system("pause");
+	}
+}

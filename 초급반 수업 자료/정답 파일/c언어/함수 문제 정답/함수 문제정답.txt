@@ -1,0 +1,63 @@
+#include<stdio.h>
+#define TRUE 1
+#define FALSE 0
+int Big(int Num1, int Num2)
+{
+	if (Num1 >= Num2)
+		return Num1;
+	else
+		return Num2;
+}
+
+int X2(int Num1)
+{
+	if (Num1 % 2 == 0)
+		return TRUE;
+	else
+		return FALSE;
+}
+
+int AbsoluteValue(int Num1)
+{
+	if (Num1 < 0)
+		return -Num1;
+	else
+		return Num1;
+}
+
+int Reverse(int Num1)
+{
+	int Num2 = 0;
+	while (TRUE)
+	{
+		Num2 += Num1 % 10;
+		Num1 /= 10;
+		if (Num1 == 0)
+			break;
+		Num2 *= 10;
+	}
+	return Num2;
+}
+
+void main()
+{
+	int Num1, Num2;
+	printf("1.두 수를 입력 하시오 : ");
+	scanf("%d%d", &Num1, &Num2);
+	printf("%d와 %d중 큰 수는 %d 입니다.\n", Num1, Num2, Big(Num1, Num2));
+
+	printf("2.정수 하나를 입력하시오 : ");
+	scanf("%d", &Num1);
+	if (X2(Num1) == TRUE)
+		printf("%d는 짝수 입니다.\n", Num1);
+	else
+		printf("%d는 홀수 입니다.\n", Num1);
+
+	printf("3.정수 하나를 입력하시오 : ");
+	scanf("%d", &Num1);
+	printf("%d의 절대값 : %d\n", Num1, AbsoluteValue(Num1));
+
+	printf("4.정수 하나를 입력하시오 : ");
+	scanf("%d", &Num1);
+	printf("%d의 거꾸로 수 : %d", Num1, Reverse(Num1));
+}

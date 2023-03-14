@@ -1,0 +1,26 @@
+private void OnTriggerStay(Collider other) {
+        // 자신이 사망하지 않았으며,
+        // 최근 공격 시점에서 timeBetAttack 이상 시간이 지났다면 공격 가능
+        if (!dead && Time.time >= lastAttackTime + timeBetAttack)
+        {
+            // 상대방으로부터 LivingEntity 타입을 가져오기 시도
+            LivingEntity attackTarget
+                = other.GetComponent<LivingEntity>();
+
+            // 상대방의 LivingEntity가 자신의 추적 대상이라면 공격 실행
+            if (attackTarget != null && attackTarget == targetEntity)
+            {
+                // 최근 공격 시간을 갱신
+                lastAttackTime = Time.time;
+
+                // 상대방의 피격 위치와 피격 방향을 근삿값으로 계산
+                Vector3 hitPoint
+                    = other.ClosestPoint(transform.position);
+                Vector3 hitNormal
+                    = transform.position - other.transform.position;
+
+                // 공격 실행
+                attackTarget.OnDamage(damage, hitPoint, hitNormal);
+            }
+        }
+    }

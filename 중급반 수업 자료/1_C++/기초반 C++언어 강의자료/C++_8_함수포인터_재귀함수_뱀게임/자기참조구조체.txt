@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+struct Point
+{
+	int number;
+	int x, y;
+	Point* Next;
+};
+
+
+
+void Menu(int icount)
+{
+	cout << "ÁÂÇ¥ °¹¼ö = " << icount << endl;
+	cout << "1.ÁÂÇ¥Ãß°¡" << endl;
+	cout << "2.ÁÂÇ¥º¸±â" << endl;
+	cout << "3.Á¾·á" << endl;
+	cout << "ÀÔ·Â = ";
+}
+
+void Release(Point* Node)
+{
+	if (Node == NULL)
+		return;
+	Release(Node->Next);
+	delete Node;
+}
+
+void main()
+{
+	int icount = 0;
+	int num;
+	Point *pt = NULL, *tmp, *add;
+	while (1)
+	{
+		system("cls");
+		Menu(icount);
+		cin >> num;
+		switch (num)
+		{
+		case 1:
+			icount++;
+			if (icount == 1)
+			{
+				pt = new Point;
+				cout << "x = ";
+				cin >> pt->x;
+				cout << "y = ";
+				cin >> pt->y;
+				pt->number = icount;
+				pt->Next = NULL;
+			}
+			else
+			{
+				tmp = pt;
+				while (tmp->Next != NULL)
+				{
+					tmp = tmp->Next;
+				}
+				add = new Point;
+				cout << "x = ";
+				cin >> add->x;
+				cout << "y = ";
+				cin >> add->y;
+				add->Next = NULL;
+				add->number = icount;
+				tmp->Next = add;
+			}
+			break;
+		case 2:
+			tmp = pt;
+			while (tmp != NULL)
+			{
+				cout << tmp->number << "¹øÂ° ÁÂÇ¥" << endl << "x = " << tmp->x << endl << "y = " << tmp->y << endl;
+				cout << "=======================" << endl << endl;
+				tmp = tmp->Next;
+			}
+			system("pause");
+			break;
+		case 3:
+			Release(pt);
+			exit(1);
+		}
+	}
+	Release(pt);
+}

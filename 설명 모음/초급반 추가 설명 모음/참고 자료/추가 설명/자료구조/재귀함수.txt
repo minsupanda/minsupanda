@@ -1,0 +1,26 @@
+0 9
+0 4
+0 2
+0 1
+>0 0 left
+0 1
+> 1 1 right
+0 1 merge
+0 2 left 반환중 (00, 01merge, )
+> 2 2 right
+0 2 merge
+0 4 (00, 01 02 merge) // 왼쪽 배열 끝
+3 4
+>3 3 left
+3 4
+>4 4 right
+3 4 merge // 오른쪽 배열 끝
+0 4 merge
+
+0 9 left 반환중
+이제 오른쪽 시작
+
+다하면
+0 9 right 반환
+
+0 9로 정렬 시작

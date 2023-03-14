@@ -1,0 +1,16 @@
+Miner::Miner(const int& id) : // 이게 뭐고? 콜론초기화?
+	BaseGameEntity(id), // 대괄호 여기서 쳐야하는게 아닌가?
+	m_Location(Location_Type::shack),
+	m_nGoldCarried(0),
+	m_nMoneyInBank(0),
+	m_nThirst(0),
+	m_nFatigue(0),
+	m_pCurrState(GoHomeAndSleepTilRested::Instance()) { }
+
+
+- BaseGameEntity 얘가 부모 class인데 디폴트 생성자가 없는 상황
+- 여기서 그냥 Miner 생성자 {스코프} 안에서 초기화를 한다면 이미 BaseGameEntity 디폴트 생성자가 호출되었어야 할 시점이다
+- 하지만 부모의 디폴트 생성자가 없기 때문에 생성과 동시에 초기화를 시켜주는 콜론초기화를 사용해서 부모의 복사생성자를 호출시킨다
+- 만약 부모의 디폴트 생성자를 사용하는 경우라면 굳이 이런식으로 하지 않아도 되고, {스코프}안에서 처리해도 된다.
+- 번외로, 자신의 클래스에서 const 형태로 선언된 변수를 초기화 시키고 싶으면 콜론 초기화를 사용하면 된다
+- 위의 코드에서는 const형태는 아니지만 저런식으로 처리한것. 당연히 {스코프}안으로 빼도 된다!

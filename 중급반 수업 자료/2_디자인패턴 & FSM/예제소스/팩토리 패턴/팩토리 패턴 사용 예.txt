@@ -1,0 +1,17 @@
+{
+	Method::ArcherCreate* archer = new Method::ArcherCreate;
+	Method::Character* character = archer->Create();
+	character->Attack();
+	delete character;
+	delete archer;
+}
+
+
+{
+	Abstract::Character* archer = new Abstract::Archer(new Abstract::ArcherEquipment);
+	Abstract::Character* warrior = new Abstract::Warrior(new Abstract::WarriorEquipment);
+	archer->Attack();
+	warrior->Attack();
+	delete archer;
+	delete warrior;
+}

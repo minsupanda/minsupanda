@@ -1,0 +1,29 @@
+void GameManager::SaveFile()
+{
+	string buff;
+	ifstream load;
+	ofstream save;
+	load.open(CONTINUE_FILE_NAME);
+	if (load.is_open())
+	{
+		load.seekg(0, ios::end);
+		// seekg : 메모장 커서 움직여주는 함수 (시작 = 0, 어디에 커서 보낼지) / end == 메모장 끝까지 커서 이동 
+		int size = load.tellg();
+		// tellg = 커서를 기준으로 앞의 내용들 쫙 읽어서 글자 수 반환
+		buff.resize(size);
+		// 여기서 메모리 용량을 정해줘야 read에서 오류가 나지 않는다.
+		// read가 요구하는 매개변수는 char* 인데, buff에 초기값을 세팅하지 않거나 메모리 용량을 정해주지 않으면 시작주소를 받아올 수가 없어 오류가 나게 된다
+		// string 내부는 가변배열이기 때문에 처음부터 메모리 용량을 한번만 정해주면 더욱 효율적이기 때문에 resize로 메모리 할당해준 것
+		load.seekg(0, ios::beg);
+		// begin == 처음으로 커서 이동
+		load.read(&buff[0], size); // &buff[0] 대신 (char*)buff.c_Str()을 해줘도 된다
+		// buff시작주소부터 size만큼(글자수 : 여기서는 메모장에 저장된 모든 글자들) 읽어옴
+		load.close();
+		save.open(SAVE_FILE_NAME);
+		save << buff;
+		save.close();
+		save.open(CONTINUE_FILE_NAME);
+		save << "-1";
+		save.close();
+	}
+}

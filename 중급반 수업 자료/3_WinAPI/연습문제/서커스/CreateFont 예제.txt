@@ -1,0 +1,5 @@
+HFONT font=CreateFont(50,0,0,0,0,0,0,0,HANGEUL_CHARSET,0,0,0,0,"궁서");
+oldfont=(HFONT)SelectObject(hdc,font);
+TextOut(hdc, 100,100,str,strlen(str));
+SelectObject(hdc,oldfont);
+DeleteObject(font);

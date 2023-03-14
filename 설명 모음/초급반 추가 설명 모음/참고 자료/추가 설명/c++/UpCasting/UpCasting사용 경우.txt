@@ -1,0 +1,7 @@
+
+[UpCasting 사용 경우]
+
+- 부모 Class의 함수와 자식들 Class의 함수가 동일할 때
+ex. 부모에서 virtual로 Attack함수 만들고 자식들한테서 Attack함수 오버라이딩해서 사용하는 경우
+* 단, 한 자식에게서 단독적으로 실행되는 함수가 있다면 다운캐스팅을 하거나 (DaynmaicCAST : 하지만 안정성이 좋지않아 추천하진 않는다) UpCasting을 하지 않는다.
+다만, Attack함수를 타고들어가서 실행되는 Attack관련 함수라면 UpCasting을 활용

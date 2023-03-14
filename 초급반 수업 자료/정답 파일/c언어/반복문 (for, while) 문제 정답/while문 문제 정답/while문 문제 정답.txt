@@ -1,0 +1,74 @@
+#include<stdio.h>
+
+void main()
+{
+	int i = 0, j = 0, sum = 0;
+	//while (1)
+	//{
+	//	printf("1.10 ~ 20 사이 정수 입력 : ");
+	//	scanf("%d", &i);
+	//	if (i >= 10 && i <= 20)
+	//		break;
+	//	printf("잘못 입력\n");
+	//}
+	//while (j <= i)
+	//{
+	//	sum += j;
+	//	j++;
+	//}
+	//printf("1 ~ %d 사이 누적 합계 : %d\n", i, sum);
+
+	//i = 0;
+	//printf("2.Hello 출력\n");
+	//while (i < 5)
+	//{
+	//	printf("Hello\n");
+	//	i++;
+	//}
+
+	//printf("3.정수 반복 입력(0입력 시 종료)\n");
+	//i = 1;
+	//sum = 0;
+	//while (i)
+	//{
+	//	printf("정수 입력 : ");
+	//	scanf("%d", &i);
+	//	sum += i;
+	//}
+	//printf("최종 합계 : %d\n", sum);
+
+	printf("4.소수 판별\n");
+	printf("정수 입력 : ");
+	scanf("%d", &i);
+	j = 2;
+	int check = i / 2;
+	while (j <= check && i % j != 0)
+	{
+		j++;
+	}
+	if (j == check + 1)
+		printf("%d은(는) 소수 입니다.\n", i);
+	else
+		printf("%d은(는) 소수가 아닙니다.\n", i);
+
+	printf("5.입력된 정수 거꾸로 출력\n");
+	printf("정수 입력 : ");
+	scanf("%d", &i);
+	while (i)
+	{
+		printf("%d", i % 10);
+		i /= 10;
+	}
+	printf("\n");
+
+	sum = 0;
+	printf("6.입력된 정수의 각자리 수 합계\n");
+	printf("정수 입력 : ");
+	scanf("%d", &i);
+	while (i)
+	{
+		sum += i % 10;
+		i /= 10;
+	}
+	printf("최종 합계 : %d", sum);
+}

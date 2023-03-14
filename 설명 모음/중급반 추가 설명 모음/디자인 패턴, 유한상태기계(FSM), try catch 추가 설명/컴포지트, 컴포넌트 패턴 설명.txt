@@ -1,0 +1,15 @@
+[컴포넌트(컴포지트) 패턴]
+- 여러개의 하위 클래스를 하나의 상위 클래스에 기능별로 나누어 넣는 것
+ex. Character 클래스에 Move, Draw, Attack 등의 기능별 클래스를 넣는 것
+
+* Component : interface
+* Leaf : 자식이 없는 가장 하위 클래스,Move, Draw 등의 기능별 클래스
+* Compsite : Character와 같이 생성된 Component가 저장된 클래스
+맴버 변수로 Component가 0개가 될 수도 있고 n개가 될 수도 있다
+
+*이때 Component를 만들때 __interface(c++에서만 __를 붙히긴 함)를 사용한다
+-> 순수가상함수로만 이루어진 Class가 만들어질 것 같을때 interface로 만들게 되면
+따로 virutal, abstract를 붙히지 않아도 된다 + 가상 소멸자도 만들지 않아도 알아서 처리된다
+
+* Compsite에 저장된 Component를 추가하거나 삭제할 수도 있지만 굳이 여러번 반복적으로 
+삭제하고 추가하는 것은 추천되지 않음! 

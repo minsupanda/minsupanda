@@ -1,0 +1,58 @@
+#pragma warning(disable:4996) //sdl해제코드(scanf_s 사용 안하려고(옵션에서 sdl 체크 해제한 것과 같음), 파일 입력 받을 때 예를 들어 지정된 배열 크기보다 더 큰 크기를 입력 받으면 메모리가 오버 되는데 그것을 막기 위해서 sdl해제를 옵션에서 해줬던 건데 이거는 그냥 코드로 해제시켜주는 것)
+#include<stdio.h>
+#include<time.h> //필요없음
+#include<string.h>
+//KPM 알고리즘을 사용한 것.
+int KMPCheck(char buf[], char Check[], int Size)
+{
+	for (int i = 0; i <= Size / 2; i++)
+	{
+		if (buf[i] != Check[i] || buf[Size - i] != Check[Size - i])
+			return 0;
+	}
+	return 1;
+}
+
+int KMPSearch(char buf[], char Check[], int Size)
+{
+	int count = 0;
+	for (int i = 0; buf[i] != NULL; i++)
+	{
+		if (Check[0] == buf[i] && Check[Size - 1] == buf[i + Size - 1])
+		{
+			if (KMPCheck(&buf[i + 1], &Check[1], Size - 3) == 1)
+			{
+				count++;
+				i += (Size - 1);
+			}
+		}
+	}
+	return count;
+}
+void main()
+{
+	char buf[300000] = { 0 };
+	FILE* f = fopen("Alice.txt", "r");
+	if (f == NULL)
+	{
+		printf("해당 이름의 파일이 없습니다.\n");
+		return;
+	}
+	else
+	{
+		fread(buf, sizeof(buf), 1, f);
+		fclose(f);
+		printf("%s", buf);
+		char Check[256];
+		printf("Check Word Input : ");
+		scanf("%s", Check);
+		f = fopen("Alice.txt", "r");
+		int count = 0;
+		while (!feof(f))
+		{
+			fgets(buf, sizeof(buf), f);
+			count += KMPSearch(buf, Check, strlen(Check));
+		}
+		printf("KPM Check %s Count : %d\n", Check, count);
+	}
+}

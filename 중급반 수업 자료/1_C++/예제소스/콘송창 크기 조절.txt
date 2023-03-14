@@ -1,0 +1,2 @@
+필요 헤더 : windows.h 또는 stdlib.h
+사용 방법 : system("mode con: cols=열숫자 lines=행숫자");

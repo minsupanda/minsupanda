@@ -1,0 +1,52 @@
+//
+//#include<iostream>
+//using namespace std;
+//template<typename t>
+//t func(t a)//////1.전달받은 값 +1
+//{	
+//	a+=1;
+//	return a;
+//}
+//void main()
+//{
+//int a;
+//cout<<"숫자 입력 : ";
+//cin>>a;
+//cout<<"입력받은 숫자 + 1 = "<<func(a)<<endl;
+//}
+
+
+//#include<iostream>
+//using namespace std;
+//template<typename t>
+//t func(t a,t b)//////2. 두수중 작은수
+//{	
+//	if(a>b)	return b;
+//	else	return a;
+//}
+//void main()
+//{
+//	int a,b;
+//	cout<<"두수를 입력 : ";
+//	cin>>a>>b;
+//	cout<<"두수중 작은수 : "<<func(a,b)<<endl;
+//}
+
+#include<iostream>
+using namespace std;
+template<typename t>
+t func(t a, t b, t c)
+{
+	if (a > b && a > c)
+		return a;
+	else if (b > a && b > c)
+		return b;
+	else
+		return c;
+}
+void main() {
+	int a, b, c, max;
+	cout << "세 수를 입력 : ";
+	cin >> a >> b >> c;
+	cout << "세수중 큰수는 : " << func(a, b, c) << endl;
+}

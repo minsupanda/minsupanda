@@ -1,0 +1,109 @@
+//STL : Standard Template Library
+//Math,Sort,functional,container(자료구조 라이브러리)
+//stack,queue,list,vector,map
+#include<stdio.h>
+#include<stack>
+#include<queue>
+#include<list>//Linked Type List
+#include<vector>//Array Type List
+
+//배열 : 모든 변수의 메모리 주소는 연속된다.
+//		 배열의 이름은 시작주소를 저장하고 있으면 특정 원소 접근 시 시작 주소에 + 연산을 하여 접근한다.
+
+//list
+//장점 : 데이터 저장 삭제가 자유롭다.
+//단점 : 데이터 접근속도가 느리다.
+
+//vector(가변배열)
+//장점 : 데이터의 접근속도가 빠르다.
+//단점 : 데이터의 저장 삭제가 비효율적이다.
+
+
+void Print(std::list<int> iList)
+{
+	for (std::list<int>::iterator iter = iList.begin(); iter != iList.end(); iter++)
+	{
+		printf("%d ", *iter);
+	}
+	printf("\n");
+}
+
+std::list<int>::iterator Search(std::list<int>* iList, int Data)
+{
+	for (std::list<int>::iterator iter = iList->begin(); iter != iList->end(); iter++)
+	{
+		if (*iter == Data)
+			return iter;
+	}
+	return iList->end();
+}
+void SearchData(std::list<int> iList, int Data)
+{
+	std::list<int>::iterator iter = std::find(iList.begin(), iList.end(), Data);
+	if (iter == iList.end())
+		printf("%d 데이터를 찾지 못했습니다.\n", Data);
+	else
+		printf("%d 데이터를 찾았습니다.\n", Data);
+}
+
+void AddData(std::list<int>* iList, int Data, int Add)
+{
+	std::list<int>::iterator iter = Search(iList, Data);
+	if (iter != iList->end())
+		iList->insert(iter, Add);
+}
+
+void ModifyData(std::list<int>* iList, int Data, int ModifyData)
+{
+	std::list<int>::iterator iter = Search(iList, Data);
+	if (iter != iList->end())
+		*iter = ModifyData;
+}
+
+void DeleteData(std::list<int>* iList, int Data)
+{
+	std::list<int>::iterator iter = Search(iList, Data);
+	if (iter != iList->end())
+		iList->erase(iter);
+}
+
+void main()
+{
+	//저장,출력,검색,추가,수정,삭제
+	std::list<int> iList;
+
+	for (int i = 1; i <= 10; i++)
+	{
+		iList.push_back(i);
+	}
+	iList.push_front(200);
+	Print(iList);
+	SearchData(iList, 5);
+	SearchData(iList, 15);
+
+	AddData(&iList, 5, 15);
+	Print(iList);
+	ModifyData(&iList, 15, 30);
+	Print(iList);
+	ModifyData(&iList, 200, 0);
+	Print(iList);
+
+	iList.pop_back();
+	Print(iList);
+
+	iList.pop_front();
+	Print(iList);
+
+	DeleteData(&iList, 30);
+	Print(iList);
+
+	iList.sort();//오름차순
+	iList.reverse();//역순
+	Print(iList);
+
+	iList.sort();
+	Print(iList);//오름차순
+
+	iList.clear();//전체삭제
+
+}

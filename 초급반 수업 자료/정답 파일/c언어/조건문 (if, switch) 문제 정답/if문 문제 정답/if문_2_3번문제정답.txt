@@ -1,0 +1,16 @@
+#include<stdio.h>
+
+void main()
+{
+	int lunchBox, Price;
+	printf("구매할 도시락 갯수를 입력하시오 :");
+	scanf("%d", &lunchBox);
+	if (lunchBox <= 10)
+		Price = 2500 * lunchBox;
+	else
+	{
+		Price = 25000;
+		Price += (lunchBox - 10) * 2400;
+	}
+	printf("도시락 %d개 가격 : %d원", lunchBox, Price);
+}
