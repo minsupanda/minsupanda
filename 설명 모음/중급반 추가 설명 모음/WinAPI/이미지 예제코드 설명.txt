@@ -11,7 +11,7 @@ switch (message)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // BeginPaint : GetDC의 역할을 해준다.
-            // 출력 기능을 얘가 맞고 있다
+            // 출력 기능을 얘가 맡고 있다
             // HDC 형태가 출력 기능을 하는게 아니라 BeginPaoint로 발급받은 DC가 출력 역할을 하는 건가?
             HDC memDC = CreateCompatibleDC(hdc);
             // GetDC는 Window의 DC를 잠시 받아오는 거고, CreateCompatibleDC는 DC를 새로 만들어 사용하는 것이다.
