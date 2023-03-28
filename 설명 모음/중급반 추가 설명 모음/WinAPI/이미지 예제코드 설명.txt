@@ -13,11 +13,13 @@ switch (message)
             // BeginPaint : GetDC의 역할을 해준다.
             // 출력 기능을 얘가 맡고 있다
             // HDC 형태가 출력 기능을 하는게 아니라 BeginPaoint로 발급받은 DC가 출력 역할을 하는 건가?
+
             HDC memDC = CreateCompatibleDC(hdc);
             // GetDC는 Window의 DC를 잠시 받아오는 거고, CreateCompatibleDC는 DC를 새로 만들어 사용하는 것이다.
             // -> GetDC는 Release로 빌린걸 반납하는 거고, CreateCompatibleDC는 Delete로 만든것은 삭제해주어야 한다.
             // 매개변수인 hdc(캔버스)에 호환되는 그림도구를 만드는 함수이다.
             // 이렇게 Create로 만들어진 모든 DC들을 Memory DC라고 칭한다.
+
             HBITMAP myBitmap = (HBITMAP)LoadImage(NULL, L"새 폴더\\00.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
             // 우선 WinAPI에서 사용가능한 이미지 확장자는 BitMap 뿐이기 때문에 IMAGE_BITMAP 이걸로 고정이 된다.
             // 2번째 인자는 파일이 저장된 경로를 지정하고 마지막에 이미지 파일명을 넣는다.
@@ -27,9 +29,11 @@ switch (message)
             HBITMAP OldBitmap = (HBITMAP)SelectObject(memDC, myBitmap);
             // SelectObject : memDC에 myBitmap에 저장된 핸들값?을 덮어쒸우는 것
             // + 반환하는 자료는 myBitmap의 덮어쒸우기 전의 상태를 반환한다.
+
             StretchBlt(hdc, 200, 200, 245, 345, memDC, 0, 0, 145, 245, SRCCOPY);
             BitBlt(hdc, 0, 0, 145, 245, memDC, 0, 0, SRCCOPY);
             // 두 함수 모두 memDC에 저장된 이미지 데이터를 hdc에게 출력해달라고 하는 것
+	// memDC가 myBitmap의 메모리에 접근이 가능하다 -> memDC가 접근한 출력한 이미지를 hdc가 출력시키는 것
 
             // 만약 추가적으로 이미지를 출력하고 싶을때는
             // SelectObject(memDC, OldBitmap);
