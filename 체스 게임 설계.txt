@@ -1,0 +1,32 @@
+<Piece>
+- Direction 구조체 : 어떤 방향으로 움직일 건지
+
+1.GameMager에서 호출되는 Piece의 MoveCheck() 함수
+- 여기서 Direction에 피스가 어떤 방향으로 움직일 건지 값 넣어주기.
+
+2. 값을 대입받은 Direction은 GameBoardManger의 PieceMoveble_TileCheck함수로 가져감
+
+3. PieceMoveble_TileCheck() 함수는 std::vector<RECT>& MoveblePosition과 현재 움직일 피스, 그리고 Direction을 받음
+
+4. 폰을 제외한 모든 피스는 4방향으로 움직이니 상하좌우로 for문 돌리기
+
+Dirction = {직선, 커브?, 대각선}
+
+- EX. 현재 피스 = 룩 / Dirction = {8, 0, 0}
+- 현재 피스의 rect에서 직선으로만 움직임
+- EX. 현재 피스 = 비숍 / Dirction = {0, 0, 8}
+- 현재 피스의 rect에서 대각선으로만 움직임
+- EX. 현재 피스 = 퀸 / Dirction = {8, 0, 8}
+- 현재 피스의 rect에서 직선과 대각선으로 움직임
+=> 벽을 만나거나 나의 피스들, 혹은 상대의 피스를 만날때 까지 탐색하면서 MoveblePosition에 넣기
+
+- EX. 현재 피스 = 킹 / Dirction = {1, 0, 1}
+- 현재 피스의 rect에서 직선과 대각선으로 1칸씩 움직임
+- EX. 현재 피스 = 나이트 / Dirction = {3, 1, 0}
+
+현재 피스위치 + 타일RECT 만큼 더해주기
+-> x범위에 + 하면 우 -는 좌 / y 범위에 + 하면 상 -는 하 => 총 4번 반복
+
+5. MoveblePosition 그리기
+
+6. 클릭한 좌표가 MovelbePoistino에 해당하면 해당 위치로 이동하고 그 타일 위치에 piece가 있으면 piece값 바꿔주기
