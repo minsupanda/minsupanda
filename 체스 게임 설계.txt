@@ -1,32 +1,150 @@
-<Piece>
-- Direction 구조체 : 어떤 방향으로 움직일 건지
+[GameManger]
+- m_hThis : static GameManager
+- m_CurPlayColor : PieceColor
+- m_CurChoicePiece : Piece*
+- m_ClickTileImage : Bitmap*
+- m_MoveblePosition : vector<RECT>
+-----------------------------------------
+- GameManager() : GameManager
+- SetTurn() : void
+- SetScene() : void
++ ~GameManager() : GameManager
++ Get_Instance() : GameManager*
++ Init(HWND) : void
++ Click_Check(POINT) : bool
++ Draw(HDC) : void
++ Distory() : void
 
-1.GameMager에서 호출되는 Piece의 MoveCheck() 함수
-- 여기서 Direction에 피스가 어떤 방향으로 움직일 건지 값 넣어주기.
 
-2. 값을 대입받은 Direction은 GameBoardManger의 PieceMoveble_TileCheck함수로 가져감
+[GameBoardManager]
+- m_hthis : static GameBoardManager
+- m_Image[2] : Bitmap
+- m_width : int
+- m_height : int
+- m_Tile[8][8] : struct
+-----------------------------------------
+- GameBoardManager() : GameBoardManager
++ ~GameBoardManager() : GameBoardManager
++ Get_Instance() : GameBoardManager
++ Init(int, int, int, int) : void
++ Draw(HDC) : void
++ PieceCoord_In_Tile_Save(vector) : void
++ Point_in_TileRect_Check(POINT) : Piece
++ Position_In_PieceCheck(Piece*) : bool
++ Distory() : void
 
-3. PieceMoveble_TileCheck() 함수는 std::vector<RECT>& MoveblePosition과 현재 움직일 피스, 그리고 Direction을 받음
 
-4. 폰을 제외한 모든 피스는 4방향으로 움직이니 상하좌우로 for문 돌리기
+[PieceManager]--->[Piece]
+- m_hthis : static PieceManager
+- Pieces[2] : vector<Pieces*>
+------------------------------------
+- PieceManager() : PieceManager
++ ~GameBoardManager() : PieceManager
++ Get_Instance() : PieceManager
++ Get_Pieces(PieceColor) : vector<Piece*>
++ Init(int, int, int, int) : void
++ CoordInit<Template>(PieceColor, int, int, int, int, int) : void
++ Draw(HDC) : void
++ Distory() : void
 
-Dirction = {직선, 커브?, 대각선}
 
-- EX. 현재 피스 = 룩 / Dirction = {8, 0, 0}
-- 현재 피스의 rect에서 직선으로만 움직임
-- EX. 현재 피스 = 비숍 / Dirction = {0, 0, 8}
-- 현재 피스의 rect에서 대각선으로만 움직임
-- EX. 현재 피스 = 퀸 / Dirction = {8, 0, 8}
-- 현재 피스의 rect에서 직선과 대각선으로 움직임
-=> 벽을 만나거나 나의 피스들, 혹은 상대의 피스를 만날때 까지 탐색하면서 MoveblePosition에 넣기
+<<abstract>>
+[Piece]
+- m_piece : PieceType
+- m_color : PieceColor
+- m_pieceImage : Bitmap*
+- m_ix : int
+- m_iy : int
+- m_width : int
+- m_height : int
+- m_BitmapRect : RECT
+------------------------------------
++ MoveCheck(vector<RECT>&) abstract : void
++ Piece() : Piece
++ ~Piece() : Piece
++ Get_PieceType() : PieceType
++ Get_Color() : PieceColor
++ Get_CX() : int
++ Get_CY() : int
++ Init(int, int, int, int) : void
++ Draw(HDC) : void
++ PositionChange(RECT*) : void
 
-- EX. 현재 피스 = 킹 / Dirction = {1, 0, 1}
-- 현재 피스의 rect에서 직선과 대각선으로 1칸씩 움직임
-- EX. 현재 피스 = 나이트 / Dirction = {3, 1, 0}
 
-현재 피스위치 + 타일RECT 만큼 더해주기
--> x범위에 + 하면 우 -는 좌 / y 범위에 + 하면 상 -는 하 => 총 4번 반복
+             <<abstract>>  
+[Pawn] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : void
++ Pawn() : Pawn
++ Pawn(PieceColor) : Pawn
++ ~Pawn() : Pawn
 
-5. MoveblePosition 그리기
 
-6. 클릭한 좌표가 MovelbePoistino에 해당하면 해당 위치로 이동하고 그 타일 위치에 piece가 있으면 piece값 바꿔주기
+             <<abstract>>  
+[Knight] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : void
++ Knight() : Knight
++ Knight(PieceColor) : Knight
++ ~Knight() : Knight
+
+
+             <<abstract>>  
+[Rook] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : void
++ Rook() : Rook
++ Rook(PieceColor) : Rook
++ ~Rook() : Rook
+
+
+             <<abstract>>  
+[Bishop] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : void
++ Bishop() : Bishop
++ Bishop(PieceColor) : Bishop
++ ~Bishop() : Bishop
+
+
+             <<abstract>>  
+[Queen] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : virtual void
++ Queen() : Queen
++ Queen(PieceColor) : Queen
++ ~Queen() : Queen
+
+
+             <<abstract>>  
+[King] - - ▷ [Piece]
+------------------------------------
++ MoveCheck(vector<RECT>&) override : virtual void
++ King() : King
++ King(PieceColor) : King
++ ~King() : King
+
+
+[BitmapManager]--->[Bitmp]
+- m_hthis : static BitmapManager
+- m_parrBitmap : vector<Bitmap>
+-----------------------------------------
+- BitmapManager() : BitmapManager
++ ~BitmapManager() : BitmapManager
++ Get_Instance() : static BitmapManager*
++ Get_Image(int) : Bitmap*
++ Init(HWND) : void
++ Distory() : void 
+
+
+[Bitmap]
+- MemDC : HDC
+- m_Bitmap : HBITMAP
+- m_Size : SIZE
+-----------------------------------------
++ Bitmap() : Bitmap
++ Bitmap() : Bitmap
++ Init(HDC, const char*) : void
++ Draw(HDC, int, int, int, int) : void 
++ PieceDraw(HDC, int, int, int, int) : void
++ MovableTileDraw(HDC, int, int, int, int) : void 
