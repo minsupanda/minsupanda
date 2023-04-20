@@ -5,10 +5,10 @@
 - m_ClickTileImage : Bitmap*
 - m_MoveblePosition : vector<RECT>
 -----------------------------------------
-- GameManager() : GameManager
+- GameManager()
 - SetTurn() : void
 - SetScene() : void
-+ ~GameManager() : GameManager
++ ~GameManager()
 + Get_Instance() : GameManager*
 + Init(HWND) : void
 + Click_Check(POINT) : bool
@@ -21,11 +21,11 @@
 - m_Image[2] : Bitmap
 - m_width : int
 - m_height : int
-- m_Tile[8][8] : struct
+- m_Tile[8][8] : TileCoord
 -----------------------------------------
 - GameBoardManager() : GameBoardManager
 + ~GameBoardManager() : GameBoardManager
-+ Get_Instance() : GameBoardManager
++ Get_Instance() : GameBoardManager*
 + Init(int, int, int, int) : void
 + Draw(HDC) : void
 + PieceCoord_In_Tile_Save(vector) : void
@@ -48,6 +48,11 @@
 + Distory() : void
 
 
+<<enumerator>>
+PieceType {,,,,,, }
+<<enumerator>>
+PieceColor {,,,,,, }
+
 <<abstract>>
 [Piece]
 - m_piece : PieceType
@@ -57,11 +62,8 @@
 - m_iy : int
 - m_width : int
 - m_height : int
-- m_BitmapRect : RECT
 ------------------------------------
-+ MoveCheck(vector<RECT>&) abstract : void
-+ Piece() : Piece
-+ ~Piece() : Piece
++ MoveCheck(vector<RECT>&) abstract : void <= [GameManger].Click_Check()
 + Get_PieceType() : PieceType
 + Get_Color() : PieceColor
 + Get_CX() : int
@@ -75,76 +77,34 @@
 [Pawn] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : void
-+ Pawn() : Pawn
-+ Pawn(PieceColor) : Pawn
-+ ~Pawn() : Pawn
-
++ Pawn(PieceColor)
 
              <<abstract>>  
 [Knight] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : void
-+ Knight() : Knight
 + Knight(PieceColor) : Knight
-+ ~Knight() : Knight
-
 
              <<abstract>>  
 [Rook] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : void
-+ Rook() : Rook
 + Rook(PieceColor) : Rook
-+ ~Rook() : Rook
-
 
              <<abstract>>  
 [Bishop] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : void
-+ Bishop() : Bishop
 + Bishop(PieceColor) : Bishop
-+ ~Bishop() : Bishop
-
 
              <<abstract>>  
 [Queen] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : virtual void
-+ Queen() : Queen
 + Queen(PieceColor) : Queen
-+ ~Queen() : Queen
-
 
              <<abstract>>  
 [King] - - ▷ [Piece]
 ------------------------------------
 + MoveCheck(vector<RECT>&) override : virtual void
-+ King() : King
 + King(PieceColor) : King
-+ ~King() : King
-
-
-[BitmapManager]--->[Bitmp]
-- m_hthis : static BitmapManager
-- m_parrBitmap : vector<Bitmap>
------------------------------------------
-- BitmapManager() : BitmapManager
-+ ~BitmapManager() : BitmapManager
-+ Get_Instance() : static BitmapManager*
-+ Get_Image(int) : Bitmap*
-+ Init(HWND) : void
-+ Distory() : void 
-
-
-[Bitmap]
-- MemDC : HDC
-- m_Bitmap : HBITMAP
-- m_Size : SIZE
------------------------------------------
-+ Bitmap() : Bitmap
-+ Bitmap() : Bitmap
-+ Init(HDC, const char*) : void
-+ Draw(HDC, int, int, int, int) : void 
-+ PieceDraw(HDC, int, int, int, int) : void
-+ MovableTileDraw(HDC, int, int, int, int) : void 
