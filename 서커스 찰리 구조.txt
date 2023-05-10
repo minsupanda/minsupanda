@@ -1,0 +1,10 @@
+[GameManager]
+- m_fps : int
+- m_deltaTime : float
+- m_limitTime : ULONGLONG
+- m_checkTime : ULONGLONG
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Distory() : void
+- Init(HWND) : void
+- Draw(HDC) : void
+- MyCreateDIBSection(HDC, int width, int height) : HBITMAP
