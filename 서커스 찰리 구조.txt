@@ -1,10 +1,46 @@
 [GameManager]
-- m_fps : int
-- m_deltaTime : float
-- m_limitTime : ULONGLONG
-- m_checkTime : ULONGLONG
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-- Distory() : void
-- Init(HWND) : void
-- Draw(HDC) : void
+- m_This : static GameManager*
+- m_ClientRect : RECT
+- m_hWnd : HWND
+- m_forntDC : HDC
+- m_backDC : HDC
+- m_backBitmap : HBITMAP 
 - MyCreateDIBSection(HDC, int width, int height) : HBITMAP
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Get_Instance() : static GameManager*
+- Distory() : void
+- Release() : void
+- Init(HWND) : void
+- Draw() : void
+- Update(const float&) : void
+
+
+[Player]
+- m_CharacterImage[6] : Bitmap*
+- m_ix : float
+- m_iy : float
+- m_width : int
+- m_height : int
+- m_Speed : float
+- m_isDie : bool
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Input() : void
+- Move() : void
+- Jump() : void
+- Update(float deltaTime) : // GameMgr->Update()에서 호출
+- Draw(HDC m_backDC) : void
+- ColliderCheck() : bool
+
+
+[ColliderManager]
+- 충돌체 이미지
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Update(float deltaTime) : // GameMgr->Update()에서 호출
+- backDraw(HDC m_backDC) : void
+
+
+[MapManager]
+- 배경 이미지
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Update(int deltaTime) : // GameMgr->Update()에서 호출
+- backDraw(HDC m_backDC) : void
