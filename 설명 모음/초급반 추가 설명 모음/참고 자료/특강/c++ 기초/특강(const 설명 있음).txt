@@ -51,11 +51,15 @@ const int* GeAttack() {  return &Attack; }
 // { return &(++Attack) } : 정상 작동한다
 // { return &(Attack++) } : 오류 -> 
 
-Q : 얘는 왜 되냐?
-const int GetAttack() { return Attack; }
-int a = sword.GettAttack();
+--------------------(찰리 게임)
+const SIZE* size; // 주소가 가리키는 데이터만 상수화
+// SIZE* const size : 얘가 가리키는 주소를 상수화 시키는 것. 그래서 null로 초기화한다면 다른 주소로 바꾸지 못함
+// const SIZE* const size : 얘가 가리키는 주소를 상수화 시키는 것 + 주소가 가리키는 데이터도 상수화
 
-
+// const(1) SIZE* const(2) Get_Size() const(3) { return& m_Size; }
+// const(1) : 리턴된 값을 상수화 시켜 수정하지 못하게 막겠다
+// const(2) : 메모리 주소를 상수화 시키는 것
+// const(3) : 리턴 코드 작성 시 그 값을 수정하지 못하게 막는 것
 
 
 
