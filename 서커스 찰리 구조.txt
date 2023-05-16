@@ -4,7 +4,9 @@
 - m_hWnd : HWND
 - m_forntDC : HDC
 - m_backDC : HDC
-- m_backBitmap : HBITMAP 
+- m_backBitmap : HBITMAP
+- m_width : int
+- m_height : int
 - MyCreateDIBSection(HDC, int width, int height) : HBITMAP
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 - Get_Instance() : static GameManager*
@@ -12,35 +14,44 @@
 - Release() : void
 - Init(HWND) : void
 - Draw() : void
-- Update(const float&) : void
+- Update(const float& deltaTime) : void
 
 
 [Player]
 - m_CharacterImage[6] : Bitmap*
-- m_ix : float
-- m_iy : float
-- m_width : int
-- m_height : int
-- m_Speed : float
-- m_isDie : bool
+- m_fx : float // 이미지 좌표
+- m_fy : float // 이미지 좌표
+- m_width : int // 이미지 너비
+- m_height : int // 이미지 높이
+- m_Speed : float // 캐릭터 스피드
+- m_MoveDistance : float // 현재까지 움직인 거리 : 처음에 뒤로 안가지게, 골인 전 몇 m터 지점부터는 캐릭터가 움직이게
+- m_Goal : bool // 골인 했는지 확인
+- m_isDie : bool // 죽었는지 확인
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+- Init() : void
 - Input() : void
 - Move() : void
 - Jump() : void
-- Update(float deltaTime) : // GameMgr->Update()에서 호출
 - Draw(HDC m_backDC) : void
-- ColliderCheck() : bool
 
 
-[ColliderManager]
-- 충돌체 이미지
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-- Update(float deltaTime) : // GameMgr->Update()에서 호출
-- backDraw(HDC m_backDC) : void
+Collider : struct
+{
+ Bitmap* Image;
+ SIZE size;
+ float fx;
+ float fy;
+} 
 
+[BackGround]
+- m_BackGorundImage[3] : Bitmap*
+- m_ColliderImage[4] : Collider
+- m_DrawBaseX : const int // 게임매니저로? 메크로로?
+----------------------------
+- Init() : void
+- Draw(HDC m_backDC) : void
+- ColliderCheck(float x, float y, int width, int height) : bool // 충돌 체크
+// 도착하기 몇 m전일 때 업데이트를 락하던가 Draw를 막아야 한다
 
-[MapManager]
-- 배경 이미지
-ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-- Update(int deltaTime) : // GameMgr->Update()에서 호출
-- backDraw(HDC m_backDC) : void
+// 충돌체 따로 만들기
+// 돈은 작은 링 통과하면 먹는 걸로 체크하는 것
