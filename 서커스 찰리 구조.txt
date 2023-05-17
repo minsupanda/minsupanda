@@ -7,6 +7,7 @@
 - m_backBitmap : HBITMAP
 - m_width : int
 - m_height : int
+- m_DrawBaseX : const float
 - MyCreateDIBSection(HDC, int width, int height) : HBITMAP
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 - Get_Instance() : static GameManager*
@@ -27,12 +28,15 @@
 - m_MoveDistance : float // 현재까지 움직인 거리 : 처음에 뒤로 안가지게, 골인 전 몇 m터 지점부터는 캐릭터가 움직이게
 - m_Goal : bool // 골인 했는지 확인
 - m_isDie : bool // 죽었는지 확인
+- m_MoveDraw : bool
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 - Init() : void
 - Input() : void
 - Move() : void
 - Jump() : void
+- DrawCheck() : void // m_MoveDraw사용
 - Draw(HDC m_backDC) : void
+- Update(const float& deltaTime, float& DrawBaseX) : void
 
 
 Collider : struct
@@ -44,13 +48,13 @@ Collider : struct
 } 
 
 [BackGround]
-- m_BackGorundImage[3] : Bitmap*
-- m_ColliderImage[4] : Collider
-- m_DrawBaseX : const int // 게임매니저로? 메크로로?
+m_BackGorundImage[BackGroundImage::ImageEnd] : Bitmap*
+ImageSize[BackGroundImage::ImageEnd] : const SIZE* 
+m_BackGroundWidth : int
 ----------------------------
 - Init() : void
-- Draw(HDC m_backDC) : void
-- ColliderCheck(float x, float y, int width, int height) : bool // 충돌 체크
+- Draw(HDC m_backDC, float& DrawBaseX, float& DrawBaseY) : void
+- Update(float& DrawBaseX) : void
 // 도착하기 몇 m전일 때 업데이트를 락하던가 Draw를 막아야 한다
 
 // 충돌체 따로 만들기
