@@ -18,25 +18,23 @@
 - Update(const float& deltaTime) : void
 
 
+enum Direction
+{ None, Right, Left, *Jump}
+define : DEFAULT_SPEED, DEFAULT_X, DEFAULT_Y, *MAX_Y
+
 [Player]
 - m_CharacterImage[6] : Bitmap*
 - m_fx : float // 이미지 좌표
 - m_fy : float // 이미지 좌표
-- m_width : int // 이미지 너비
-- m_height : int // 이미지 높이
 - m_Speed : float // 캐릭터 스피드
 - m_MoveDistance : float // 현재까지 움직인 거리 : 처음에 뒤로 안가지게, 골인 전 몇 m터 지점부터는 캐릭터가 움직이게
-- m_Goal : bool // 골인 했는지 확인
-- m_isDie : bool // 죽었는지 확인
-- m_MoveDraw : bool
+- dir : Direction // 이동 방향
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 - Init() : void
 - Input() : void
-- Move() : void
 - Jump() : void
-- DrawCheck() : void // m_MoveDraw사용
 - Draw(HDC m_backDC) : void
-- Update(const float& deltaTime, float& DrawBaseX) : void
+- Update(const float& deltaTime, float& DrawBaseX) : float MoveDistance
 
 
 Collider : struct
@@ -55,7 +53,6 @@ m_BackGroundWidth : int
 - Init() : void
 - Draw(HDC m_backDC, float& DrawBaseX, float& DrawBaseY) : void
 - Update(float& DrawBaseX) : void
-// 도착하기 몇 m전일 때 업데이트를 락하던가 Draw를 막아야 한다
 
 // 충돌체 따로 만들기
 // 돈은 작은 링 통과하면 먹는 걸로 체크하는 것
