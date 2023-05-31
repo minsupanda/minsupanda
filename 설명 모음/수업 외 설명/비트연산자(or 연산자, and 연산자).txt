@@ -1,0 +1,11 @@
+<비트 연산자 : or and>
+
+if (m_Goal | m_Jump) return;
+
+0000 0001
+0000 0000
+------------
+or => true (1 = true, 0 = false : 둘 중 하나라도 true이면 true)
+abd => false (1 = true, 0 = false : 둘 다 true이면 true)
+
+*** ||(or연산자) 보다 |(비트연산자)가 처리속도 면에서 좋다

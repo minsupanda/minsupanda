@@ -19,31 +19,32 @@
 
 
 enum Direction
-{ None, Right, Left, *Jump}
-define : DEFAULT_SPEED, DEFAULT_X, DEFAULT_Y, *MAX_Y
+{ None, Right, Left, Up, Down}
 
 [Player]
-- m_CharacterImage[6] : Bitmap*
+- m_CharacterImage[6] : Bitmap* : 모든 캐릭터 이미지
+- m_CurPlayerImage : Bitmap* : 현재 캐릭터 이미지
+- m_PlayerSize : const Size* : 캐릭터 이미지 크기
 - m_fx : float // 이미지 좌표
 - m_fy : float // 이미지 좌표
-- m_Speed : float // 캐릭터 스피드
+- m_DefaultX : float // 캐릭터 기본 x좌표
+- m_DefaultY : float // 캐릭터 기본 y좌표
+- m_MaxY : float // 캐릭터 맥스 y좌표
+- m_GoalX : float // 골인 x 좌표
 - m_MoveDistance : float // 현재까지 움직인 거리 : 처음에 뒤로 안가지게, 골인 전 몇 m터 지점부터는 캐릭터가 움직이게
-- dir : Direction // 이동 방향
+- m_CurMoveDistance : float // 한 프레임에 캐릭터가 움직인 거리
+- m_DirX: Direction // 캐릭터 x좌표 이동 방향
+- m_DirY: Direction // 캐릭터 y좌표 이동 방향
+- Input(const float& deltaTime) : void // 키보드 입력값 받는 함수
+- Jump(const float& deltaTime) : void // 점프 함수
+- GoalCheck() : void //골인 지점에 들어왔는 지 확인하는 함수 ***********수정해야함***************
+- ImageChange() : void // 애니메이션 함수
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-- Init() : void
-- Input() : void
-- Jump() : void
-- Draw(HDC m_backDC) : void
-- Update(const float& deltaTime, float& DrawBaseX) : float MoveDistance
-
-
-Collider : struct
-{
- Bitmap* Image;
- SIZE size;
- float fx;
- float fy;
-} 
++ Init() : void
++ Draw(HDC m_backDC) : void
++ Update(const float& deltaTime) : float MoveDistance
++ Get_MoveDistance() : const float // 총 이동거리 반환 함수
++ Get_Goal() : const bool // 골인 변수 반환 함수
 
 [BackGround]
 m_BackGorundImage[BackGroundImage::ImageEnd] : Bitmap*

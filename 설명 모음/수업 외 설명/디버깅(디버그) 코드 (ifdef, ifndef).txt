@@ -1,0 +1,14 @@
+<ifdef, ifndef>
+#ifdef _DEBUG //ifndef : 만약 _DEBUG가 포함되어 있지 않다면 => 지금 상황에서는 밑의 코드가 비활성화 된다
+	// ------------------------------------------------------------------------------------------------
+	// ------------------------------------------디버그------------------------------------------------
+	std::wstring Ymax = L"y max " + std::to_wstring(m_MaxY);
+	TextOutW(m_backDC, 20, 20, Ymax.c_str(), Ymax.length());
+
+	std::wstring characterY= L"character y " + std::to_wstring(m_fy);
+	TextOutW(m_backDC, 40, 40, characterY.c_str(), characterY.length());
+
+	std::wstring ImageChangeTime = L"ImageChangeTime y " + std::to_wstring(m_ImageChangeTime);
+	TextOutW(m_backDC, 1, 1, ImageChangeTime.c_str(), ImageChangeTime.length());
+	// ------------------------------------------------------------------------------------------------
+#endif
