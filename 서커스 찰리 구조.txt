@@ -33,8 +33,11 @@ enum Direction
 - m_GoalX : float // 골인 x 좌표
 - m_MoveDistance : float // 현재까지 움직인 거리 : 처음에 뒤로 안가지게, 골인 전 몇 m터 지점부터는 캐릭터가 움직이게
 - m_CurMoveDistance : float // 한 프레임에 캐릭터가 움직인 거리
-- m_DirX: Direction // 캐릭터 x좌표 이동 방향
-- m_DirY: Direction // 캐릭터 y좌표 이동 방향
+- m_DirX : Direction // 캐릭터 x좌표 이동 방향
+- m_DirY : Direction // 캐릭터 y좌표 이동 방향
+- m_Goal : bool
+- m_Junp : bool
+
 - Input(const float& deltaTime) : void // 키보드 입력값 받는 함수
 - Jump(const float& deltaTime) : void // 점프 함수
 - GoalCheck() : void //골인 지점에 들어왔는 지 확인하는 함수 ***********수정해야함***************
@@ -47,13 +50,32 @@ enum Direction
 + Get_Goal() : const bool // 골인 변수 반환 함수
 
 [BackGround]
-m_BackGorundImage[BackGroundImage::ImageEnd] : Bitmap*
-ImageSize[BackGroundImage::ImageEnd] : const SIZE* 
-m_BackGroundWidth : int
+- m_BackGorundImage[BackGroundImage::ImageEnd] : Bitmap*
+- m_CurAudiecneImage : Bitmap*
+- m_GroundSize : const SIZE*
+- m_AudienceSize: const SIZE*
+- m_BackGroundWidth : float
+- m_DrawBaseX : float
+- m_ImageChangeTime : float
+- ImageChange(const float& deltaTime) : void
+- PrintImage(HDC& m_backDC, Bitmap* PrintImage, int& i, int& j, float& DrawBaseY)
 ----------------------------
-- Init() : void
-- Draw(HDC m_backDC, float& DrawBaseX, float& DrawBaseY) : void
-- Update(float& DrawBaseX) : void
++ Init() : void
++ Draw(HDC m_backDC, float& DrawBaseX, float& DrawBaseY) : void
++ Update(float& DrawBaseX) : void
 
-// 충돌체 따로 만들기
-// 돈은 작은 링 통과하면 먹는 걸로 체크하는 것
+
+[Goal]
+- m_GoalImage : Bitmap*
+- m_fx : float
+- m_fy : float
+- m_GoalRange : RECT
+- m_bDraw : bool // 그려야 하는 지, 아닌 지 확인하는 변수(true가 될 때부터 그리기 시작)
+총 이동거리 + (W-m_fx) >= 3000 될 때 m_bDraw = true
+else m_bDraw = false;
+----------------------------
++ Init() : void
++ Draw(HDC m_backDC) : void
++ Update(): void
+
+
