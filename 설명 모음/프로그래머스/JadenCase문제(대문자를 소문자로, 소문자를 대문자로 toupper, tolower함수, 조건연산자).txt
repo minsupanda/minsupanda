@@ -1,0 +1,17 @@
+[JadenCase 문자열 만들기]
+
+- toupper() : 소문자만 대문자로 반환, 나머지는 그대로
+- tolower() : 대문자만 소문자로 반환, 나머지는 그대로
+- 조건연산자 ?: : 조건식이 참이면 표현식 1을 수행, 거짓일 경우 표현식 2를 수행
+
+std::string s = "3people unFollowed me";
+std::string answer = "";
+answer += toupper(s[0]);
+for (int i = 1; i < s.size(); i++)
+ s[i - 1] == ' ' ? answer += toupper(s[i]) : answer += tolower(s[i]);
+
+* 조건식 s[i - 1] == ' '
+->참일 경우, 표현식 1인 anwer += toupper(s[i])을 실행 (소문자를 대문자로)
+-> 거짓일 경우, 표현식 2인 answer += tolower(s[i])을 실행 (대문자를 소문자로)
+
+*** 즉, 여기선 이전 문자가 공백일 경우 이번 문자를 반드시 대문자로 바꾸고, 공백이 아닌 경우 무조건 소문자로 바꿔라.
