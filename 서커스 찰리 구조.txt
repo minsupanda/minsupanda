@@ -9,14 +9,16 @@
 - m_height : int
 - m_DrawBaseX : const float
 - MyCreateDIBSection(HDC, int width, int height) : HBITMAP
+- m_Score : int
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-- Get_Instance() : static GameManager*
-- Distory() : void
-- Release() : void
-- Init(HWND) : void
-- Draw() : void
-- Update(const float& deltaTime) : void
-
++ Get_Instance() : static GameManager*
++ Distory() : void
++ Release() : void
++ Init(HWND) : void
++ Draw() : void
++ Update(const float& deltaTime) : void
++ ColliderCheck(const RECT& player, const RECT& colliderRect,  const RECT& colliderScoreRect) : bool
+// m_Score += 10
 
 enum Direction
 { None, Right, Left, Up, Down}
@@ -70,10 +72,9 @@ enum Direction
 - m_fx : float
 - m_fy : float
 - m_GoalRange : RECT
-- m_bDraw : bool // 그려야 하는 지, 아닌 지 확인하는 변수(true가 될 때부터 그리기 시작)
-총 이동거리 + (W-m_fx) >= 3000 될 때 m_bDraw = true
-else m_bDraw = false;
+- m_bDraw : bool
 ----------------------------
+
 + Init() : void
 + Draw(HDC m_backDC) : void
 + Update(): void
