@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<Windows.h>
+#include<stdlib.h>
+typedef struct Point
+{
+	int number;
+	int x, y;
+	struct Point* Next;
+}Point;
+
+void Menu(int icount);
+void Release(Point* Node);
+Point* CreatePoint(int count);
+Point* Insert(Point* pt, int count);
+void Print(Point* pt);
+
+
+void Menu(int icount)
+{
+	printf("좌표 갯수 = %d\n", icount);
+	printf("1.좌표추가\n");
+	printf("2.좌표보기\n");
+	printf("3.종료\n");
+	printf("입력 = ");
+}
+
+void Release(Point* Node)
+{
+	while (Node != NULL)
+	{
+		Point* Delete_Node = Node;
+		Node = Node->Next;
+		printf("%d번째 좌표 메모리 해제\n", Delete_Node->number);
+		free(Delete_Node);
+	}
+}
+Point* CreatePoint(int count)
+{
+	Point* pt = (Point*)malloc(sizeof(Point));
+	printf("x = ");
+	scanf("%d", &pt->x);
+	printf("y = ");
+	scanf("%d", &pt->y);
+	pt->number = count;
+	pt->Next = NULL;
+	return pt;
+}
+
+//void Insert2(Point* pt, int count)
+//{
+//	while (pt->Next != NULL)
+//		pt = pt->Next;
+//	pt->Next = CreatePoint(count);
+//}
+
+Point* Insert(Point* pt ,int count)
+{
+	if (pt == NULL)
+		pt = CreatePoint(count);
+	else
+	{
+		Point* tmp = pt;
+		while (tmp->Next != NULL)
+			tmp = tmp->Next;
+		tmp->Next = CreatePoint(count);
+	}
+	return pt;
+}
+
+void Print(Point* pt)
+{
+	while (pt != NULL)
+	{
+		printf("%d번째 좌표\nx = %d\ny = %d\n", pt->number, pt->x, pt->y);
+		printf("=======================\n\n");
+		pt = pt->Next;
+	}
+}
+
+void main()
+{
+	int icount = 0;
+	int num;
+	Point* pt = NULL;
+	while (1)
+	{
+		system("cls");
+		Menu(icount);
+		scanf("%d", &num);
+		switch (num)
+		{
+		case 1:
+			icount++;
+			//if (pt == NULL)
+			//	pt = CreatePoint(icount);
+			//else
+			//	Insert2(pt, icount);
+			pt = Insert(pt, icount);
+			break;
+		case 2:
+			Print(pt);
+			system("pause");
+			break;
+		case 3:
+			Release(pt);
+			return;
+		}
+	}
+}

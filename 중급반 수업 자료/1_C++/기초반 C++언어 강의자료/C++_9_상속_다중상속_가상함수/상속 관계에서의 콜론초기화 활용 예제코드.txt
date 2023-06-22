@@ -1,0 +1,64 @@
+#include<iostream>
+using namespace std;
+
+class Parent
+{
+private:
+	int m_iParentData;
+public:
+	Parent()
+	{
+		m_iParentData = 1;
+	}
+	Parent(int _iData)
+	{
+		m_iParentData = _iData;
+	}
+	void PrintData()
+	{
+		cout << "ParentData : " << m_iParentData << endl;
+	}
+};
+
+class Child : public Parent
+{
+private:
+	int m_iChildData;
+public:
+	Child()
+	{
+		m_iChildData = 1;
+	}
+	Child(int _iData) : Parent(_iData)
+	{
+		m_iChildData = _iData;
+	}
+	Child(int _iParentData,int _iChildData) : Parent(_iParentData)
+	{
+		m_iChildData = _iChildData;
+	}
+	void PrintData()
+	{
+		Parent::PrintData();
+		cout << "ChildData : " << m_iChildData << endl;
+	}
+};
+
+void main()
+{
+	Child child1;
+	cout << "child1" << endl;
+	child1.PrintData();
+	cout << "=================" << endl;
+
+	Child child2(2);
+	cout << "child2" << endl;
+	child2.PrintData();
+	cout << "=================" << endl;
+
+	Child child3(3,4);
+	cout << "child3" << endl;
+	child3.PrintData();
+	cout << "=================" << endl;
+
+}

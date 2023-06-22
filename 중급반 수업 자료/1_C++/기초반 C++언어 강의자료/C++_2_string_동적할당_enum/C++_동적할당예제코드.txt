@@ -1,6 +1,7 @@
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
 #include<Windows.h>
+#include<vector>
 using namespace std;
 
 #define STUDENTMAX 50
@@ -9,12 +10,13 @@ using namespace std;
 
 void main()
 {
-	int Select,StudentCount= 0;
-	string* student[STUDENTMAX];
+	int Select;
+	vector<string*> ptrStringList;
+	string* studentTmp;
 	while (1)
 	{
 		system("cls");
-		cout << "===학생정보관리===(학생수 : "<<StudentCount <<"명)" << endl;
+		cout << "===학생정보관리===(학생수 : " << ptrStringList.size() << "명)" << endl;
 		cout << "   1.학생등록" << endl;
 		cout << "   2.학생정보 보기" << endl;
 		cout << "   3.종료" << endl;
@@ -23,25 +25,27 @@ void main()
 		switch (Select)
 		{
 		case 1:
-			if (StudentCount < STUDENTMAX)
+			if (ptrStringList.size() < STUDENTMAX)
 			{
-				student[StudentCount] = new string;
-				cout << StudentCount+1 << "번 학생 이름 : ";
-				cin >> *student[StudentCount++];
+				studentTmp = new string;
+				cout << ptrStringList.size() + 1 << "번 학생 이름 : ";
+				cin >> *studentTmp;
+				ptrStringList.push_back(studentTmp);
 			}
 			break;
 		case 2:
-			for (int i = 0; i < StudentCount; i++)
-				cout << i + 1 << "번 학생 : " << *student[i] << endl;
+			for (int i = 0; i < ptrStringList.size(); i++)
+				cout << i + 1 << "번 학생 : " << *ptrStringList[i] << endl;
 			system("pause");
 			break;
 		case 3:
-			for (int i = 0; i < StudentCount; i++)
+			for (int i = 0; i < ptrStringList.size(); i++)
 			{
-				cout << i + 1 << "번 학생 : " << *student[i] << endl;
-				delete student[i];
+				cout << *ptrStringList[i] << "학생" << endl;
+				delete ptrStringList[i];
 				cout << "할당 해제 완료" << endl;
 			}
+			ptrStringList.clear();
 			system("pause");
 			return;
 		}

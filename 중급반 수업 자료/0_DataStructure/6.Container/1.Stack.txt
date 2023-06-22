@@ -1,0 +1,23 @@
+//STL : Standard Template Library
+//algorithm,functional,container(자료구조 라이브러리)
+//stack,queue,list,vector,map
+#include<stdio.h>
+#include<stack>
+
+
+void main()
+{
+	std::stack<int> iStack;
+
+	for (int i = 1; i <= 5; i++)
+	{
+		iStack.push(i);
+		printf("Top : %d\n", iStack.top());
+	}
+	printf("Size : %d\n", iStack.size());
+	while (!iStack.empty())
+	{
+		printf("Top : %d\n", iStack.top());
+		iStack.pop();
+	}
+}

@@ -1,4 +1,4 @@
-#include "../Engine/Component.h"
+#include "../Component.h"
 
 #ifndef LR_INPUT_H
 #define LR_INPUT_H

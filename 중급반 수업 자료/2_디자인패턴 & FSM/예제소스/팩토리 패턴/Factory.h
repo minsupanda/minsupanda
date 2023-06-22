@@ -49,10 +49,11 @@ namespace Abstract
 		}
 	};
 
-	__interface EquipmentAbstractFactory
+	class EquipmentAbstractFactory
 	{
-		Weapon* CreateWeapon();
-		Armor* CreateArmor();
+	public:
+		virtual Weapon* CreateWeapon() abstract;
+		virtual Armor* CreateArmor() abstract;
 	};
 	// 인터페이스 구현으로 어떤 객체를 만들지 결정.
 	class ArcherEquipment : public EquipmentAbstractFactory

@@ -1,5 +1,5 @@
 #include "InputComponent.h"
-#include "../Engine/Manger/InputManager.h"
+#include "../InputManager.h"
 #include <cassert>
 
 namespace ENGINE
