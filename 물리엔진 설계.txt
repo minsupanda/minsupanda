@@ -3,8 +3,6 @@
 
 
 [FrameWork]
-- m_NormalVector : Vector2
-- MyCreateDIBSection : HBITMAP(HDC hdc, int width, int height)
 - m_hWnd : HWND 
 - m_forntDC : HDC 
 - m_backDC : HDC
@@ -15,53 +13,62 @@
 + Init : void(HWND hWnd)
 + Draw : void()
 + Update : void(const float& deltaTime) // Figures->Update() 후 CollisionCheck() 호출 
-+ CollisionCheck() : void // physicsEngine ->CollisionCheck() 호출
+- CollisionCheck() : void // physicsEngine ->CollisionCheck() 호출
+- MyCreateDIBSection : HBITMAP(HDC hdc, int width, int height)
 
 
 
 [PhysicsEngine]
+- m_NormalVector : Vector2
 - CollidingObject : vector<Firgure*>
 ---------------------------------------------------
-+ CollisionCheck : bool(std::vector<Firgure*> Figures) // Figures for문 돌리면서 각 도형 충돌체크 함수로 이동 -> 충돌체크 함수에서 true가 반환되면 CollidingObject에 input하고 바로 충돌 후 처리하고 이어서 반복문 진행, 반복문 끝나면 종료
++ GravityApply : void(std::vector<Firgure*>Figures, const float& deltaTime) // Figures->Update() 호출
+// 메크로의 중력 벡터와 가져온 deltaTime 곱하기 -> 중력가속도 값을 오브젝트의 벡터와 더해주기
++ CollisionCheck : bool(std::vector<Firgure*> Figures, const float& deltaTime)
+// Figures for문 돌리면서 각 도형 충돌체크 함수로 이동 -> 충돌체크 함수에서 true가 반환되면 CollidingObject에 input하고 바로 충돌 후 처리하고 이어서 반복문 진행, 반복문 끝나면 종료
 + CirclevsCircle : bool(Circle* lhs, Circle* rhs) // 충돌 확인
-+ CollisionHandling : void() // 내적 < 0이면 충돌 가속도 적용 후 물체 이동, CollidingObject->PositionUpdate() 호출
+// 여기서 true가 반환되더라도 충돌 처리 판별하기 -> 상대속도 구하기 -> 내적구하기
++ CollisionHandling : void(const float& deltaTime) // 내적 < 0이면 충돌 가속도 적용 후 물체 이동, *****************CollidingObject->PositionUpdate() 호출하면 안됌
+// 충돌 값 구하기 -> 충돌에 의해 발생한 속도 값 구하기 -> 가속도와 프레임 당 속도 구해서 물체 이동
 
 
 
-<<abstract>>
-[Figure]
+
 enum FIGURE
 {
 CirCle,
 Square
 };
-- m_FigureName : FIGURE
-- m_Positinon : Position
+
+<<abstract>>
+[Figure]
+- m_Type : FIGURE
+- m_Positinon : Vector2
 - m_e : float
 - m_Mass : float
 - m_Inv_Mass : float = 1 / mass; // mass가 0이 될 수 없도록 막기
-- m_Velocity : float
+- m_Velocity : Vector2
+- m_halfSize : Vector2
 ---------------------------------
 + Init : virutal void() abstract
 + Draw : virutal void() abstract
-+ Update : virtual void(const float& deltaTime) abstract // 중력 가속도 적용
-+ PositionUpdate : virtual void(const float& im, const float& deltaTime) abstract // 물체 이동
++ AddForcel : void(Vector2 force) abstract // 가속도 적용, 중력은 계산해서 벡터로 받아오기
++ Update : void(const float& deltaTime) abstract // 물체 이동
++ Get_e : float
++ Get_Inv_Mass : float
++ Get_halfSize : Vector2
 
 
 [Circle] : public Figure
-- m_Radius : float
+// size x, y 값 둘다 같은 값 집어넣기
 ---------------------------------
 + Init : virutal void() override
 + Draw : virutal void() override
-+ Update : virtual void(const float& deltaTime) override
-+ PositionUpdate : virtual void(const float& im, const float& deltaTime) override
+
 
 
 [Square]: public Figure
-- m_Width : float
-- m_Hieght : float
 ---------------------------------
 + Init : virutal void() override
 + Draw : virutal void() override
-+ Update : virtual void(const float& deltaTime) override
-+ PositionUpdate : virtual void(const float& im, const float& deltaTime) override
+
