@@ -12,7 +12,7 @@
 ---------------------------------
 + Init : void(HWND hWnd)
 + Draw : void()
-+ Update : void(const float& deltaTime) // Figures->Update() 후 CollisionCheck() 호출 
++ Update : void(const float& deltaTime) // Figures->AddForce() 후 CollisionCheck() 호출 
 - CollisionCheck() : void // physicsEngine ->CollisionCheck() 호출
 - MyCreateDIBSection : HBITMAP(HDC hdc, int width, int height)
 
@@ -52,8 +52,8 @@ Square
 ---------------------------------
 + Init : virutal void() abstract
 + Draw : virutal void() abstract
-+ AddForcel : void(Vector2 force) abstract // 가속도 적용, 중력은 계산해서 벡터로 받아오기
-+ Update : void(const float& deltaTime) abstract // 물체 이동
++ AddForcel : void(Vector2 force) // 가속도 적용, 중력은 계산해서 벡터로 받아오기
++ Update : void(const float& deltaTime) // 물체 이동
 + Get_e : float
 + Get_Inv_Mass : float
 + Get_halfSize : Vector2
