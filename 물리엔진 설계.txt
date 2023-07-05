@@ -64,7 +64,7 @@ Square
 ---------------------------------
 + Init : virutal void() override
 + Draw : virutal void() override
-
++ Get_radius : float
 
 
 [Square]: public Figure
