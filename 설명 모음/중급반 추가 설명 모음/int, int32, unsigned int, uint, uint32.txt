@@ -1,0 +1,6 @@
+- int가 os에 따라 4byte가 아닐 때도 있다.
+ -> 그렇기 때문에 int와, INT32는 os에 따라 다르기 때문에 상황에 맞게 써야한다.
+
+- INT32 : int를 무조건 32bit로 고정시켜두는 것
+
+- (unsigned int == UINT) != UINT32

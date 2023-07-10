@@ -1,0 +1,14 @@
+#pragma once
+- 중복 include 방지
+
+---------------------------------
+
+#ifndef ENGINE_MECRO_H
+ #define ENGINE_MECRO_H
+
+~~~~
+
+#endif
+
+- ifndef A : 만약 A가 define 되어있지 않다면 밑의 if문을 실행, define 되어있으면 endif로 가게 된다.  
+** pragma once가 없을 때, 이런 식으로 중복 include를 막았다.
