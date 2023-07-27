@@ -1,11 +1,53 @@
+[abstract class Furniture]
+- FurnitureTr : Transform*
+- FurnitureImage : Bitmap*
+-------------------------
++Initialize : void()
++Update : void()
++Draw : void()
++Interaction() : void() // 상호작용 : Nomal -> "아무런 반응이 없다"  /  Event -> LoadScene()
+
+[NormalFurniture] : public Furniture
+
+[EventFurniture] : public Furniture
+- Item : std::vector<Bitmap*>
+- QuizSceneLoad() : void // Player->GetItme()으로 현재 아이템 확인해서 SceneMgr->LoadScene() 호출
+
 [PhoneQuizScene] : public Scene
 - isPause : bool
-- QuizImage : UIImage*
+- QuizImage : Bitmap*
+- background : Bitmap*
+- player : Player*
 - isAnswer : bool
 - Answer : std::string
+- AnswerTr : Transform*
 -----------------------------
 + Initialize : virtual void() override
 + Release : virtual void() override
-+ Update : virtual void(const FLOAT& deltaTime)  override
-+ Draw : virtual void() override
++ Update : virtual void(const FLOAT& deltaTime)  override // isAnswer == true일 때 작동하지 않도록
++ Draw : virtual void() override  // isAnswer == true일 때 작동하지 않도록
 + GetAnswer() : bool
++ AnswerCheck(std::string answer) : bool // 정답 체크
++ TakeQuiz : void() // 퀴즈 풀기, esc누르면 뒤로 가기
+
+
+[Player] : public GameObject
+- state : State
+- dir : Direction 
+- renderer : SpriteRenderer*
+- anim : AnimationComponent*
+- Inventory : std::vector<Item*>
+- CurEquipItem : Item*
+- Move : void(const float& deltaTime);
+- ItemChange() : void
+------------------------------------------
++ Init() : void
++ Release() : void
++ Update() : void(const float& deltaTime)
++ Draw() : void
++ GetItem() : Bitmap*
++ CheckInventory() : void
+
+
+[item]
+- item : bitmap*
