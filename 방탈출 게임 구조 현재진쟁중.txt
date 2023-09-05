@@ -1,0 +1,43 @@
+[Player] : public GameObject
+- state : State
+- dir : Direction 
+- renderer : SpriteRenderer*
+- anim : AnimationComponent*
+- Inventory : std::vector<Item*>
+- EquipItem : Item*
+- Move : void(const float& deltaTime);
+- ChangeItem() : void
+------------------------------------------
++ Init() : void
++ Release() : void
++ Update() : void(const float& deltaTime)
++ Draw() : void
++ CheckInventory() : void // 인벤토리 열어서 장착 아이템 교체하는 기능
+
+
+// 위치, 퀴즈, 아이템
+// 그래픽(드로우는 그냥 darw 함수 만들어서? 애니메이션 필요 없음) 컴포넌트, transform 컴포넌트추가시키기
+absrtact [???] : public GameObject 
+- ImageRenderer* renderer
+- Quiz* quiz
+-----------------------
+
+
+
+[Quiz] : public ImageRenderer
+- ImageRenderer* renderer
+- std::string Answer 
+
+
+
+[ImageRenderer]: public GraphicComponent
+- Bimtap* Image
+- SIZE size
+-------------------
++ virtual void Operate(GameObject* Owner) override;
++ virtual void Reset() override;
++ virtual void SetScale(UINT cx, UINT cy) override;
++ virtual void Draw() override;
+
+
+
