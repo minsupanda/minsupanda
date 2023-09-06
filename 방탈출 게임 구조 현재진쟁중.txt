@@ -3,8 +3,10 @@
 - dir : Direction 
 - renderer : SpriteRenderer*
 - anim : AnimationComponent*
-- Inventory : std::vector<Item*>
+- Inventory : std::vector<int> // GameManager에서 모든 아이템을 한 번에 관리하고, 플레이어 인벤토리나 퀴즈 정답 아이템은 인덱스로 가지고 있게 하기
+// 배열로 만들 지 고민하기
 - EquipItem : Item*
+- bounds : int
 - Move : void(const float& deltaTime);
 - ChangeItem() : void
 ------------------------------------------
@@ -13,31 +15,60 @@
 + Update() : void(const float& deltaTime)
 + Draw() : void
 + CheckInventory() : void // 인벤토리 열어서 장착 아이템 교체하는 기능
++ GetItem(std::vector<item*> getitem0)
 
 
 // 위치, 퀴즈, 아이템
-// 그래픽(드로우는 그냥 darw 함수 만들어서? 애니메이션 필요 없음) 컴포넌트, transform 컴포넌트추가시키기
-absrtact [???] : public GameObject 
-- ImageRenderer* renderer
+// 그래픽 컴포넌트 추가시키기
+absrtact Furniture : public GameObject  // 얘를 상속받아서 각 가구 오브젝트 클래스 만들기
+- Bitmpa* Image
+- renderer : SpriteRenderer*
 - Quiz* quiz
+- std::vector<Item*>
 -----------------------
++virtual  VOID Initialize(); override; // 가구 이미지, 아이템 이미지 불러오고, 컴포넌트 추가시키기
++virtual  VOID Release();override;
++virtual  VOID Update(const FLOAT& deltaTime);override; // 상호작용 되는 지 확인 한 후 업데이트 
++virtual  VOID Draw(); override;
++ bool Interaction(Item* EquipItem)
 
 
-
-[Quiz] : public ImageRenderer
-- ImageRenderer* renderer
-- std::string Answer 
-
-
-
-[ImageRenderer]: public GraphicComponent
-- Bimtap* Image
-- SIZE size
--------------------
-+ virtual void Operate(GameObject* Owner) override;
-+ virtual void Reset() override;
-+ virtual void SetScale(UINT cx, UINT cy) override;
-+ virtual void Draw() override;
+// 퀴즈 추상 클래스
+abstract Quiz : public GameObject   // 얘를 상속받아서 각 퀴즈 클래스 만들기
+- Bitmpa* Image
+- renderer : SpriteRenderer*
+- std::string Answer
+- bool isClear
+-------------------------------
++virtual  VOID Initialize();override;
++virtual  VOID Release();override;
++virtual  VOID Update(const FLOAT& deltaTime);override;
++virtual  VOID Draw(); override;
++bool IsClear()
++bool AnswerCheck(std::string answer)
 
 
+// 배치된 사물 오브젝트들
+Phone : public Furniture
+Clock : public Furniture
+Safe :  public Furniture
+storage cabinet : public Furniture
+
+
+// 신 클래스, 신으로 나누지 말고 그냥 한 번에 할지 고민
+PhoneScene : public Scene
+- Bitmap* background
+- Phone* phone
+- Player* player
+- UIButton* puaseBtn
+- UIImage* pauseWindow
+--------------------------------------
++virtual  VOID Initialize();override;
++virtual  VOID Release();override;
++virtual  VOID Update(const FLOAT& deltaTime);override;
++virtual  VOID Draw(); override;
+
++VOID PauseBtnClickHandler();
++VOID ContinueBtnClickHandler();
++VOID QuitBtnClickHandler();
 
