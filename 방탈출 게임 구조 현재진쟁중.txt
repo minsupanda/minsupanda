@@ -42,17 +42,17 @@ abstract Quiz : public GameObject   // 얘를 상속받아서 각 퀴즈 클래�
 -------------------------------
 +virtual  VOID Initialize();override;
 +virtual  VOID Release();override;
-+virtual  VOID Update(const FLOAT& deltaTime);override;
-+virtual  VOID Draw(); override;
++virtual  VOID Update(const FLOAT& deltaTime);override; //  Furniture update에서 작동하게 하기
++virtual  VOID Draw(); override; // Furniture update에서 작동하게 하기
 +bool IsClear()
-+bool AnswerCheck(std::string answer)
++bool AnswerCheck(std::string answer) // 내가 쓰는 답은 그때 그냥 바로 넘겨줘서 확인할 수 있도록
 
 
 // 배치된 사물 오브젝트들
 Phone : public Furniture
 Clock : public Furniture
 Safe :  public Furniture
-storage cabinet : public Furniture
+StorageCabinet : public Furniture
 
 
 // 신 클래스, 신으로 나누지 말고 그냥 한 번에 할지 고민
@@ -65,10 +65,24 @@ PhoneScene : public Scene
 --------------------------------------
 +virtual  VOID Initialize();override;
 +virtual  VOID Release();override;
-+virtual  VOID Update(const FLOAT& deltaTime);override;
++virtual  VOID Update(const FLOAT& deltaTime);override; 
 +virtual  VOID Draw(); override;
 
 +VOID PauseBtnClickHandler();
 +VOID ContinueBtnClickHandler();
 +VOID QuitBtnClickHandler();
+
+
+
+// GameScene : public Scene
+- Bitmap* background
+- UIButton* puaseBtn
+- UIImage* pauseWindow
+- Player* player // 오브젝트 위치와 비교 + Dir 확인
+- // 오브젝트 배열들
+- Furniture* Interactionfurniture = null // 오브젝트와 상호작용 하게 되면 값이 바뀌게
+
+------------------------------------------
+
+
 
