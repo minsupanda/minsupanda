@@ -34,7 +34,7 @@ absrtact Furniture : public GameObject  // 얘를 상속받아서 각 가구 오
 
 
 // 퀴즈 추상 클래스
-abstract Quiz : public GameObject   // 얘를 상속받아서 각 퀴즈 클래스 만들기
+Quiz : public GameObject   // 얘를 상속받아서 각 퀴즈 클래스 만들기
 - Bitmpa* Image
 - renderer : SpriteRenderer*
 - std::string Answer

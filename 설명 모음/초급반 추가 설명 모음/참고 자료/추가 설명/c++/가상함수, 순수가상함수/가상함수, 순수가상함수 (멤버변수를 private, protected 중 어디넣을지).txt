@@ -1,10 +1,10 @@
 https://coding-factory.tistory.com/699
 http://www.tcpschool.com/cpp/cpp_polymorphism_virtual (가상함수 테이블 : 가상함수 호출 원리?방식?)
-
+https://forswdev.tistory.com/entry/C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%9D%98-%EC%83%81%EC%86%8DInheritance%EA%B3%BC-%EB%8B%A4%ED%98%95%EC%84%B1polymorphism
 [가상함수]
 - UpCasting했을 때, 오버라이딩 된 자식Class의 함수를 사용해도 부모 Class 함수가 호출되었음
 -> 이러한 문제를 해결하기 위해 가상함수를 사용하는 것
-
+- virutal을 사용하면 이 함수가 오버라이딩 되어있는지 파악한다
 *** 기본적으로 가상함수를 사용했다 -> UpCasting 했다 *** 
 
 
@@ -49,3 +49,35 @@ http://www.tcpschool.com/cpp/cpp_polymorphism_virtual (가상함수 테이블 : 
 Q : 롤에서 챔피언이라는 Class를 만들 때 기본적으로 공통되는 정보(HP, ATTACK, SPELL 등)는 private, protected 중 어디 넣냐?
 
 A : 취향차이 
+
+
+
+
+
+
+
+
+
+
+상속
+
+
+* 추상 클래스(abstract)
+- 이 클래스는 반드시 어딘가에서 상속받아서 쓰일거라고 선언하는 것
+
+
+* 순수 가상 함수
+- 이 함수는 반드시 어딘가에서 오버라이딩 되서 쓰이는 것
+- 호출될 때마다 동작이 다르게 되도록 설정하는 것
+
+
+* 가상 함수
+- 이 함수가 어딘가에서 오버라이딩 될 수도 있고, 안 될 수도 있는 것
+- 기본적으로는 이 함수의 원형으로 사용되는데, 오버라이딩 되어 있는 경우에서 다르게 동작 되도록 설정하는 것
+
+
+- 그러면 순수 가상 함수와 가상 함수 중 어떻게 사용할 지 결정하는 거는?
+ -> 원형으로도 동작이 되냐 안 되냐? 한 번이라도 원형으로 동작이 된다면 가상함수로, 아니면 순수 가상함수로?
+
+- 추상 클래스는 반드시 함수가 전부다 순수 가상 함수로 이루어 져있나?
+
