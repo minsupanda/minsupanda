@@ -7,6 +7,7 @@
 // 배열로 만들 지 고민하기
 - EquipItem : Item*
 - bounds : int
+- pressInteractionKey : bool
 - Move : void(const float& deltaTime);
 - ChangeItem() : void
 ------------------------------------------
@@ -16,7 +17,7 @@
 + Draw() : void
 + CheckInventory() : void // 인벤토리 열어서 장착 아이템 교체하는 기능
 + GetItem(std::vector<item*> getitem0)
-
++ GetpressInteractionKey() : bool 
 
 // 위치, 퀴즈, 아이템
 // 그래픽 컴포넌트 추가시키기
@@ -55,24 +56,6 @@ Safe :  public Furniture
 StorageCabinet : public Furniture
 
 
-// 신 클래스, 신으로 나누지 말고 그냥 한 번에 할지 고민
-PhoneScene : public Scene
-- Bitmap* background
-- Phone* phone
-- Player* player
-- UIButton* puaseBtn
-- UIImage* pauseWindow
---------------------------------------
-+virtual  VOID Initialize();override;
-+virtual  VOID Release();override;
-+virtual  VOID Update(const FLOAT& deltaTime);override; 
-+virtual  VOID Draw(); override;
-
-+VOID PauseBtnClickHandler();
-+VOID ContinueBtnClickHandler();
-+VOID QuitBtnClickHandler();
-
-
 
 // GameScene : public Scene
 - Bitmap* background
@@ -81,8 +64,9 @@ PhoneScene : public Scene
 - Player* player // 오브젝트 위치와 비교 + Dir 확인
 - // 오브젝트 배열들
 - Furniture* Interactionfurniture = null // 오브젝트와 상호작용 하게 되면 값이 바뀌게
-
+- CheckInteraction() : bool
 ------------------------------------------
+
 
 
 
