@@ -70,3 +70,13 @@ StorageCabinet : public Furniture
 
 
 
+
+
+
+
+
+
+
+파일 입출력 사용해서 퀴즈 데이터 불러오기
+데이터를 외부에 뺄지 코딩으로 해둘지 구분하기
+
