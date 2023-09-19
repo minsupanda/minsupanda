@@ -1,52 +1,54 @@
+// 플레이어 클래스
 [Player] : public GameObject
-- state : State
-- dir : Direction 
-- renderer : SpriteRenderer*
-- anim : AnimationComponent*
-- Inventory : std::vector<int> // GameManager에서 모든 아이템을 한 번에 관리하고, 플레이어 인벤토리나 퀴즈 정답 아이템은 인덱스로 가지고 있게 하기
-// 배열로 만들 지 고민하기
-- EquipItem : Item*
-- bounds : int
-- pressInteractionKey : bool
-- Move : void(const float& deltaTime);
-- ChangeItem() : void
+- State state;
+- Direction Dir;
+- Vector2 minBounds; // Left, Top
+- Vector2 maxBounds; // Right, Bottom
+- int Inventory[MaxInventory]; // 인벤토리 : 아이템 인덱스 번호로 관리
+- int EquipItem; // 현재 장착 중인 아이템
+- bool pressInteractionKey; // 상호작용 키가 눌러졌는지의 유무(스페이스가 눌러졌는지에 따라 true, false)
+- SpriteRenderer* Renderer;
+- AnimationComponent* Anim;
+- void Move(const float& deltaTime);
+- void ChangeItem();
+- Inventory : std::vector<ItemType>
+// GameManager에서 모든 아이템을 한 번에 관리하고, 플레이어 인벤토리나 퀴즈 정답 아이템은 인덱스로 가지고 있게 하기
 ------------------------------------------
-+ Init() : void
-+ Release() : void
-+ Update() : void(const float& deltaTime)
-+ Draw() : void
-+ CheckInventory() : void // 인벤토리 열어서 장착 아이템 교체하는 기능
-+ GetItem(std::vector<item*> getitem0)
-+ GetpressInteractionKey() : bool 
++void Initialize();
++void Update(const FLOAT& deltaTime);
++void Draw();
++void StateChange(State changeState) { state = changeState; }
++void Release();
++void pressKeyChange() { pressInteractionKey = false; }
++bool GetpressInteractionKey() { return pressInteractionKey; }
++RECT* GetRect() { return Renderer->GetRect(); }
++Vector2 GetPos() { return Renderer->GetPos(); }
++Direction GetDir() { return Dir; }
++State GetState() { return state; }
++ void AcquireItem(std::vector<ItemType> items);
 
-// 위치, 퀴즈, 아이템
-// 그래픽 컴포넌트 추가시키기
+
+// 가구 추상 클래스
 absrtact Furniture : public GameObject  // 얘를 상속받아서 각 가구 오브젝트 클래스 만들기
+- FurnitureType* type // 아이템들고 상호작용 할 때 비교 **************************
 - Bitmpa* Image
 - renderer : SpriteRenderer*
 - Quiz* quiz
-- std::vector<Item*>
+std::vector<ItemType> items;
+bool isAcquireItem;
 -----------------------
 +virtual  VOID Initialize(); override; // 가구 이미지, 아이템 이미지 불러오고, 컴포넌트 추가시키기
 +virtual  VOID Release();override;
 +virtual  VOID Update(const FLOAT& deltaTime);override; // 상호작용 되는 지 확인 한 후 업데이트 
 +virtual  VOID Draw(); override;
-+ bool Interaction(Item* EquipItem)
-
-
-// 퀴즈 추상 클래스
-Quiz : public GameObject   // 얘를 상속받아서 각 퀴즈 클래스 만들기
-- Bitmpa* Image
-- renderer : SpriteRenderer*
-- std::string Answer
-- bool isClear
--------------------------------
-+virtual  VOID Initialize();override;
-+virtual  VOID Release();override;
-+virtual  VOID Update(const FLOAT& deltaTime);override; //  Furniture update에서 작동하게 하기
-+virtual  VOID Draw(); override; // Furniture update에서 작동하게 하기
-+bool IsClear()
-+bool AnswerCheck(std::string answer) // 내가 쓰는 답은 그때 그냥 바로 넘겨줘서 확인할 수 있도록
++void QuizStart() { quizStart = true; }
++void QuizEnd() { quizStart = false; quiz->ClearinputAnswer(); }
++RECT* GetRect() { return Renderer->GetRect(); }
++Vector2 GetPos() { return Renderer->GetPos(); }
++bool GetQuizStart() { return quizStart; }
++bool GetQuizClear() { return quiz->GetisClear(); }
++bool GetAcquireItem() { return isAcquireItem; }
++std::vector<ItemType> GetItem() { return items; }
 
 
 // 배치된 사물 오브젝트들
@@ -57,26 +59,59 @@ StorageCabinet : public Furniture
 
 
 
+// 퀴즈 클래스
+Quiz : public GameObject
+- renderer : SpriteRenderer*
+- std::string Answer // 퀴즈 정답
+- std::string inputAnswer // 내가 입력한 정답
+- bool isClear // 퀴즈 클리어 유무
+-------------------------------
++VOID Initialize()
++VOID Release()
++VOID Update(const FLOAT& deltaTime); //  Furniture update에서 작동하게 하기
++VOID Draw();
++bool GetIsClear()
++ClearinputAnswer() {inputAnswer.clear();} // 내가 입력한 정답 clear(없으면 esc했다 다시 들어가면 이전 답이 남아있음)
+
+
+// 게임 신 클래스
 // GameScene : public Scene
 - Bitmap* background
-- UIButton* puaseBtn
-- UIImage* pauseWindow
-- Player* player // 오브젝트 위치와 비교 + Dir 확인
-- // 오브젝트 배열들
-- Furniture* Interactionfurniture = null // 오브젝트와 상호작용 하게 되면 값이 바뀌게
-- CheckInteraction() : bool
+- Player* player
+- Furniture* Interactionfurniture = nullptr // 오브젝트와 상호작용 하게 되면 값이 바뀌게
+- CheckInteraction() : bool // 캐릭터와 사물이 충돌 하는지 체크하고 반환하는 함수
 ------------------------------------------
 
 
+// 게임 매니저 클래스
+// GameManager 
+- Item items[ItemMax];
+---------------------------
++ const GetItem(int index) : item*
 
+// item 구조체
+// struct Item : public GameObject
+SpriteRenderer* Renderer;
+ItemData data;
 
+// 아이템 데이터 구조체
+// struct ItemData
+std::string name; // 문구 출력할 때 사용, 같은 이미지를 두 개 이상 사용할 경우에는, 어떤 이미지를 사용할 지에 대한 데이터 변수도 필요하다
+FurnitureType* Interactiontype// 상호작용 가능한 가구(아이템을 캐릭터가 가지고 있을 때 상효작용 시 이 변수와 해당 가구의 type과 비교해서 사용)
 
-
-
-
-
+// 가구 타입
+// enum class FurnitureType { Phone, Clock, Safe, Table, Cabinet  }
 
 
 파일 입출력 사용해서 퀴즈 데이터 불러오기
 데이터를 외부에 뺄지 코딩으로 해둘지 구분하기
 
+
+* 뺄 데이터
+Item : bitmap 이미지 리소스 이름, 이름, 상호작용할 가구 타입(FurnitureType )
+Furniture : bitmap 이미지 리소스 이름, 가구 타입(FurnitureType ), 가지고 있을 아이템(item의 name), 퀴즈 데이터(이미지 리소스, 정답)
+player : bitmap 이미지 리소스 이름
+
+
+
+ui이미지가 부모 레이블이 자식으로(둘다 변수로 가지고 있던가 자식을 찾을 수 있으면 이미지만 변수로 가지고 있던가)
