@@ -7,25 +7,36 @@
 - int Inventory[MaxInventory]; // 인벤토리 : 아이템 인덱스 번호로 관리
 - int EquipItem; // 현재 장착 중인 아이템
 - bool pressInteractionKey; // 상호작용 키가 눌러졌는지의 유무(스페이스가 눌러졌는지에 따라 true, false)
+- bool OpenInvectory;
 - SpriteRenderer* Renderer;
 - AnimationComponent* Anim;
 - void Move(const float& deltaTime);
 - void ChangeItem();
-- Inventory : std::vector<ItemType>
-// GameManager에서 모든 아이템을 한 번에 관리하고, 플레이어 인벤토리나 퀴즈 정답 아이템은 인덱스로 가지고 있게 하기
 ------------------------------------------
 +void Initialize();
 +void Update(const FLOAT& deltaTime);
 +void Draw();
 +void StateChange(State changeState) { state = changeState; }
 +void Release();
-+void pressKeyChange() { pressInteractionKey = false; }
++void pressKeyChange(bool change) { pressInteractionKey = change; }
 +bool GetpressInteractionKey() { return pressInteractionKey; }
++bool GetOpenInventory() { return OpenInvectory; }
 +RECT* GetRect() { return Renderer->GetRect(); }
 +Vector2 GetPos() { return Renderer->GetPos(); }
 +Direction GetDir() { return Dir; }
 +State GetState() { return state; }
 + void AcquireItem(std::vector<ItemType> items);
+
+
+
+얘를 player에서 변수로 가지고 있게?
+// 인벤토리 클래스
+Inventory :
+- SpriteRenderer* Renderer;
+------------------------------------
++ void ChangeEquipItem()
+
+
 
 
 // 가구 추상 클래스
@@ -76,12 +87,25 @@ Quiz : public GameObject
 
 // 게임 신 클래스
 // GameScene : public Scene
-- Bitmap* background
-- Player* player
-- Furniture* Interactionfurniture = nullptr // 오브젝트와 상호작용 하게 되면 값이 바뀌게
-- CheckInteraction() : bool // 캐릭터와 사물이 충돌 하는지 체크하고 반환하는 함수
+-enum Data { MaxFurinture = 5, MassageTime = 2 };
+-Bitmap* background = nullptr;
+-Player* player = nullptr;
+-Furniture* Furnitures[MaxFurinture];
+-Furniture* InteractionFurniture = nullptr; // 현재 상호작용 중인 가구
+-UILabel* text = nullptr;
+-UIImage* uiImage = nullptr;
+-float messageTimer;
+-bool PrintTextUI;
+-bool CheckInteraction();
+-bool CheckQuizStart();
+-void SetTextUi();
+-void CheckTextUiTime(const float& deltaTime);
 ------------------------------------------
-
++virtual void Initialize() override;
++virtual void Release() override;
++virtual void Update(const float& deltaTime) override;
++virtual void Draw() override;
++bool GetPrintTextUi() { return PrintTextUI; }
 
 // 게임 매니저 클래스
 // GameManager 
