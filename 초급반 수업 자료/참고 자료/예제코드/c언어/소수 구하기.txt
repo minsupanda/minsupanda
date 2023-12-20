@@ -1,0 +1,19 @@
+https://velog.io/@changhee09/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%86%8C%EC%88%98%EC%9D%98-%ED%8C%90%EB%B3%84-%EC%97%90%EB%9D%BC%ED%86%A0%EC%8A%A4%ED%85%8C%EB%84%A4%EC%8A%A4%EC%9D%98-%EC%B2%B4
+소수 구하기(에라토스테네스의 체) - 전체 범위에서 소수인 것들 구하는 방법
+나중에 c++로 구현해보기
+array를 bool형이던 character형이던 만들어 놓고 ture를 false로 바꿔서 하기
+
+소수 판별 정답 코드 (위 링크에 설명 있음)
+printf("4.소수 판별\n");
+	printf("정수 입력 : ");
+	scanf("%d", &i);
+	j = 2;
+	int check = i / 2;
+	while (j <= check && i % j != 0)
+	{
+		j++;
+	}
+	if (j == check + 1)
+		printf("%d은(는) 소수 입니다.\n", i);
+	else
+		printf("%d은(는) 소수가 아닙니다.\n", i);
