@@ -47,7 +47,7 @@ void MapDraw::BoxErase(int Width, int Height)
 	}
 }
 
-void MapDraw::BoxDraw(int Start_x, int Start_y, int Width, int Height)
+void MapDraw::BoxDraw(int Start_x, int Start_y, int Width, int Height) // 사각형 그리기
 {
 	if (Start_x > Width)
 		Start_x -= Width;

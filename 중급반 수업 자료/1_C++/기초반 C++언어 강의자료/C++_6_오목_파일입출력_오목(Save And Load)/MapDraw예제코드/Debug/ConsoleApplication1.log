@@ -1,0 +1,6 @@
+﻿  Character.cpp
+C:\Users\wjdgh\OneDrive\바탕 화면\gotoxy정답코드\MapDraw.h(44,9): warning C4018: '>': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\wjdgh\OneDrive\바탕 화면\gotoxy정답코드\MapDraw.h(65,17): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\wjdgh\OneDrive\바탕 화면\gotoxy정답코드\MapDraw.h(65,20): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\wjdgh\OneDrive\바탕 화면\gotoxy정답코드\Character.cpp(27,13): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+  ConsoleApplication1.vcxproj -> C:\Users\wjdgh\OneDrive\바탕 화면\gotoxy정답코드\Debug\ConsoleApplication1.exe

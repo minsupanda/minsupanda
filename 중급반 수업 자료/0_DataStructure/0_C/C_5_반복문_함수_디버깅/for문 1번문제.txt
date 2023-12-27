@@ -1,0 +1,32 @@
+#include<stdio.h>
+
+void main()
+{
+	printf("1번문제\n");
+	for (int i = 1; i <= 10; i++)
+	{
+		if (==========)
+			continue;
+		printf("%d.Hello\n", i);
+	}
+	printf("2번문제\n");
+	for (char ch = 'A'; ch <= 'Z'; ch++)
+	{
+		printf("%c", ch);
+		if (==================)
+		{
+			============
+		}
+		printf(",");
+	}
+	printf("3번문제\n");
+	int sum = 0;
+	for (int i = 1; i <= 10; i++)
+	{
+		if (=============)
+		{
+			============
+		}
+	}
+	printf("%d", sum);
+}

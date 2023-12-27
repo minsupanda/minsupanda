@@ -1,0 +1,306 @@
+#include<stdio.h>
+#include<Windows.h>
+#define WIDTH_VALUE 15
+#define HEIGHT_VALUE 4
+
+typedef struct node
+{
+	int data;
+	struct node* left;
+	struct node* right;
+}Node;
+
+void gotoxy(int x, int y); //전방 선언
+void RightPrint(Node* node, int x, int y, int i);
+void LeftPrint(Node* node, int x, int y, int i);
+void Print_Tree(Node* node);
+int Depth(Node* node);
+int BalanceFactor(Node* node);
+Node* LL(Node* node);
+Node* RR(Node* node);
+Node* LR(Node* node);
+Node* RL(Node* node);
+Node* AVLSet(Node* node);
+Node* Insert(Node* node, int data);
+void PreOrder(Node* node);
+void InOrder(Node* node);
+void PostOrder(Node* node);
+void All_Delete(Node* node);
+Node* Delete(Node* node, int data);
+void gotoxy(int x, int y)//원하는 좌표로 커서를 이동해 주는 함수
+{
+	COORD pos = { x,y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void RightPrint(Node* node, int x, int y, int i)
+{
+	if (node == NULL)
+		return;
+	x += WIDTH_VALUE - i;
+	y += HEIGHT_VALUE;
+	gotoxy(x, y);
+	printf("%d", node->data);
+	RightPrint(node->right, x, y, i + 6);
+	LeftPrint(node->left, x, y, i + 6);
+}
+
+void LeftPrint(Node* node, int x, int y, int i)
+{
+	if (node == NULL)
+		return;
+	x -= WIDTH_VALUE - i;
+	y += HEIGHT_VALUE;
+	gotoxy(x, y);
+	printf("%d", node->data);
+	RightPrint(node->right, x, y, i + 6);
+	LeftPrint(node->left, x, y, i + 6);
+}
+
+
+void Print_Tree(Node* node)
+{
+	system("cls");
+	int x = 70, y = 2;
+	if (node == NULL)
+		return;
+	gotoxy(x, y);
+	printf("%d", node->data);
+	RightPrint(node->right, x, y, 1);
+	LeftPrint(node->left, x, y, 1);
+	gotoxy(0, 0);
+}
+
+int Depth(Node* node)
+{
+	int depth = 0;
+	if (node != NULL)
+	{
+		int leftDepth = Depth(node->left);
+		int rightDepth = Depth(node->right);
+		if (leftDepth > rightDepth)
+			depth = leftDepth + 1;
+		else
+			depth = rightDepth + 1;
+	}
+	return depth;
+}
+
+int BalanceFactor(Node* node)
+{
+	int leftDepth = Depth(node->left);
+	int rightDepth = Depth(node->right);
+	printf("Data(%d) LeftDepth(%d) RightDepth(%d)", node->data, leftDepth, rightDepth);
+	system("pause");
+	return leftDepth - rightDepth;
+}
+
+
+Node* AVLSet(Node* node)
+{
+	int bf = BalanceFactor(node);
+	// TODO: 여기에 코드를 작성
+
+	return node;
+}
+
+Node* Insert(Node* node, int data)
+{
+	if (node == NULL)
+	{
+		node = (Node*)malloc(sizeof(Node));
+		node->data = data;
+		node->left = NULL;
+		node->right = NULL;
+		return node;
+	}
+	else if (node->data < data)
+	{
+		node->right = Insert(node->right, data);
+		node = AVLSet(node);
+	}
+	else if (node->data > data)
+	{
+		node->left = Insert(node->left, data);
+		node = AVLSet(node);
+	}
+	else
+	{
+		printf("Data already exists\n");
+	}
+	return node;
+}
+
+void PreOrder(Node* node)
+{
+	if (node == NULL)
+		return;
+	printf("%d ", node->data);
+	PreOrder(node->left);
+	PreOrder(node->right);
+}
+
+void InOrder(Node* node)
+{
+	if (node == NULL)
+		return;
+	InOrder(node->left);
+	printf("%d ", node->data);
+	InOrder(node->right);
+}
+
+void PostOrder(Node* node)
+{
+	if (node == NULL)
+		return;
+	PostOrder(node->left);
+	PostOrder(node->right);
+	printf("%d ", node->data);
+}
+
+void All_Delete(Node* node)
+{
+	if (node == NULL)
+		return;
+	All_Delete(node->left);
+	All_Delete(node->right);
+	printf("%d Deallocation Success \n", node->data);
+	free(node);
+}
+
+Node* FindMinNode(Node* node, Node** MinNode)
+{
+	if (node->left == NULL)
+	{
+		*MinNode = node;
+		node = node->right;
+		return node;
+	}
+	else
+	{
+		node->left = FindMinNode(node->left, MinNode);
+		return node;
+	}
+}
+
+Node* Delete(Node* node, int data)
+{
+	if (node == NULL)
+	{
+		printf("Not find data\n");
+	}
+	else if (node->data > data)
+	{
+		node->left = Delete(node->left, data);
+		node = AVLSet(node);
+	}
+	else if (node->data < data)
+	{
+		node->right = Delete(node->right, data);
+		node = AVLSet(node);
+	}
+	else
+	{
+		Node* deletetemp = node;
+		if (node->left != NULL && node->right != NULL)
+		{
+			Node* MinNode = NULL;
+			node->right = FindMinNode(node->right, &MinNode);
+			MinNode->left = deletetemp->left;
+			MinNode->right = deletetemp->right;
+
+			node = MinNode;
+		}
+		else if (node->left != NULL)
+			node = node->left;
+		else
+			node = node->right;
+		free(deletetemp);
+	}
+	return node;
+}
+
+void Search(Node* node, int Data)
+{
+	if (node == NULL)
+	{
+		printf("Not Find Data..\n");
+		return;
+	}
+	else if (node->data == Data)
+	{
+		printf("Find Success Data!!\n");
+		return;
+	}
+	else if (node->data > Data)
+		Search(node->left, Data);
+	else if (node->data < Data)
+		Search(node->right, Data);
+}
+
+void main()
+{
+	Node* Root = NULL;
+	int Data;
+	while (1)
+	{
+		printf("========AVLTree========\n");
+		printf("1.Insert\n");
+		printf("2.Print\n");
+		printf("3.PreOrder\n");
+		printf("4.InOrder\n");
+		printf("5.PostOrder\n");
+		printf("6.Delete\n");
+		printf("7.Search\n");
+		printf("8.Exit\n");
+		int Select;
+		printf("Input >> ");
+		scanf("%d", &Select);
+		switch (Select)
+		{
+		case 1:
+			printf("Input Data >>");
+			scanf("%d", &Data);
+			Root = Insert(Root, Data);
+			Print_Tree(Root);
+			break;
+		case 2:
+			Print_Tree(Root);
+			break;
+		case 3:
+			Print_Tree(Root);
+			gotoxy(0, 0);
+			printf("PreOrder : ");
+			PreOrder(Root);
+			break;
+		case 4:
+			Print_Tree(Root);
+			gotoxy(0, 0);
+			printf("InOrder : ");
+			InOrder(Root);
+			break;
+		case 5:
+			Print_Tree(Root);
+			gotoxy(0, 0);
+			printf("PostOrder : ");
+			PostOrder(Root);
+			break;
+		case 6:
+			printf("Input Data >>");
+			scanf("%d", &Data);
+			Root = Delete(Root, Data);
+			Print_Tree(Root);
+			break;
+		case 7:
+			Print_Tree(Root);
+			printf("Input Data >>");
+			scanf("%d", &Data);
+			Search(Root, Data);
+			break;
+		case 8:
+			All_Delete(Root);
+			return;
+		}
+		system("pause");
+	}
+}

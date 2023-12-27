@@ -3,6 +3,7 @@
 #define UP 'w'
 #define DOWN 's'
 #define ENTER 13
+
 class MapDraw
 {
 public:

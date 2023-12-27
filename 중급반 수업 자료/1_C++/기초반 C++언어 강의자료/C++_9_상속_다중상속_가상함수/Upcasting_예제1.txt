@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+
+class Mammal
+{
+public:
+	void speak(int cnt)
+	{
+		cout << cnt << "번 짖다" << endl;
+	}
+	void speak()
+	{
+		cout << " 짖다" << endl;
+	}
+};
+class Dog : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "멍멍" << endl;
+	}
+};
+
+class Cat : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "야옹~" << endl;
+	}
+};
+
+class Monkey : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "우끼끼!!" << endl;
+	}
+};
+
+class Tiger : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "어흥~" << endl;
+	}
+};
+
+void main()
+{
+	Dog jindo[10];
+	Cat Navi[5];
+	Monkey Sam[7];
+	Tiger Tger[3];
+	for(int i = 0; i < 10 ; i++)
+		jindo[i].speak();
+	for (int i = 0; i < 5; i++)
+		Navi[i].speak();
+	for (int i = 0; i < 7; i++)
+		Sam[i].speak();
+	for (int i = 0; i < 3; i++)
+		Tger[i].speak();
+
+}
+

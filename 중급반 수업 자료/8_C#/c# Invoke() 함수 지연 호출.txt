@@ -1,0 +1,4 @@
+Invoke("실행함수",지연시간) : 한번 실행
+InvokeRepeating("실행함수",지연시간,반복주기) : 반복 호출
+CanelInvoke() : 모든 Invoke 종료
+CanelInvoke("종료함수") : 특정 Invoke 종료

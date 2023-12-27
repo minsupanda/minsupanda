@@ -1,0 +1,88 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define MAMMAL_COUNT 30
+
+class Mammal
+{
+public:
+	void speak(int cnt)
+	{
+		cout << cnt << "번 짖다" << endl;
+	}
+	void speak()
+	{
+		cout << " 짖다" << endl;
+	}
+};
+class Dog : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "멍멍" << endl;
+	}
+};
+
+class Cat : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "야옹~" << endl;
+	}
+};
+
+class Monkey : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "우끼끼!!" << endl;
+	}
+};
+
+class Tiger : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "어흥~" << endl;
+	}
+};
+
+class Elephant : public Mammal
+{
+public:
+	void speak()
+	{
+		cout << "뿌우우" << endl;
+	}
+};
+
+void main()
+{
+	vector<Mammal*> MammalList;
+	for (int i = 0; i < MAMMAL_COUNT; i++)
+	{
+		if (i >= 0 && i <= 9)
+			MammalList.push_back(new Dog);
+		else if(i >= 10 && i <= 14)
+			MammalList.push_back(new Cat);
+		else if(i >= 15 && i <= 21)
+			MammalList.push_back(new Monkey);
+		else if(i >= 22 && i <= 24)
+			MammalList.push_back(new Tiger);
+		else
+			MammalList.push_back(new Elephant);
+	}
+
+	for (int i = 0; i < MammalList.size(); i++)
+		MammalList[i]->speak();
+
+
+	for (int i = 0; i < MammalList.size(); i++)
+		delete MammalList[i];
+}
+
