@@ -12,11 +12,11 @@ public:
 
 	Type(const Type& t) : data(new int(2))
 	{
-		if (nullptr != t.data) 
+		if (nullptr != t.data)
 			*data = *t.data;
 		std::cout << data << "복사 생성자 호출" << std::endl;
 	}
-	 
+
 	Type(Type&& t) noexcept/* 예외가 발생하지 않는다고 알려주는 것 (vector를 사용할 때 필요함, 이동 생성자 만들 때 붙히면 됨)*/ : data(t.data)
 	{
 		t.data = nullptr;
@@ -29,13 +29,12 @@ public:
 	}
 
 	~Type() { if (data) { std::cout << "소멸자 호출" << std::endl; delete data; data = nullptr; } }
-	// 
 };
 \
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	
+
 	int a(0);
 	// std::move() 객체가 이동할 수 있음을 알려준다
 	// -> 이동 생성자가 있으면 호출, 없으면 디폴트나 복사 생성자 호출
@@ -49,6 +48,7 @@ int main()
 	// <주석이 없을 때>
 	// std::move()를 썼고 이동 생성자가 있기 때문에 이동 생성자가 호출이 되는 것
 	// 그럼 type() 얘 소멸자 호출이 안되는 이유가 모든 데이터가 t로 이동이 되었기 때문에 type() 얘를 해제할 필요가 없어 null을 넣어주었기 때문이다?
+	// 소멸자는 호출이 됐는데 if문에 걸리지 않아서 소멸자 호출 문구가 들어가지 않은 것
 
 	std::cout << "----------------------------------" << std::endl;
 	std::vector<Type> v;
@@ -56,8 +56,12 @@ int main()
 	// 이후로는 t의 데이터가 있기 때문에 이동생성자가 호출이 된다
 	v.push_back(t); // noexcept 없으면 이동 생성자가 호출이 되지 않음
 	// 근데 여기서 위에서 복사생성자로 만든 놈이 이동생성자의 매개변수로 와서 사용됨 -> 그럼 nullptr로 넣고 데이터 초기화 되던데 왜 다시 vector에는 제대로 된 값이 들어가 있음?
+	// -> 같은 t가 아니라서그럼 -> 즉, 이동생성자의 매개변수로 받는 t는 기존 t를 복사한 새로운 놈. 그리고 얘를 이동생성자가 호출되서 만든 놈으로 이동이 되는 것
+	// 복사 생성자 호출 후 바로 이동 생성자가 호출이 되는 이요
+	// -> t를 새로운 공간(vector 공간에 push back 하는 것) 이쪽으로 새롭게 만들기 때문에 그런것
 	v.push_back(t);
 	std::cout << "------------------------------------" << std::endl;
 
+	// 소멸자 연속으로 호출되는건 그냥 끝나서 그런거
 	return 0;
 }
