@@ -1,0 +1,14 @@
+[레벨 1 정수 제곱근 판별]
+
+long long answer = 0;
+long long n = 3;
+long long half = sqrt(n);
+std::cout << sqrt(n) << std::endl;  // 1.xxxxxx // sqrt()하면 6자리 소숫점까지 나온다
+std::cout << half;  // 1 // longlong으로 했기 때문에 1에서 끊어진다
+if (sqrt(n) - half != 0) // 그렇기 때문에 이 둘이 다를 수 있는 것
+	answer = -1;
+else answer = pow(half + 1, 2);
+
+// floor, ceil 같은 내림 올림 함수 사용가능
+// 여기서는  floor => sqrt(n) 과 floor(sqrt(n))이 같으면 됨
+// 제곱근이 되면 어차피 소수점 자리는 0이 나오기 때문

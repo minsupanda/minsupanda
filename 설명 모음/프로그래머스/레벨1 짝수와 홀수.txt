@@ -1,0 +1,25 @@
+[레벨1 : 짝수와 홀수]
+	if (remainder == 1)
+	{
+		answer = (char*)malloc(sizeof("Odd"));
+		strcpy(answer, "Odd");
+	}
+	else
+	{
+		answer = (char*)malloc(sizeof("Even"));
+		strcpy(answer, "Even");
+	}
+=> num이 -9일때 remainder가 -1로 나옴
+=> 1이 아니므로 else문으로 들어가 Even(짝수)로 answer이 들어가게 됨
+
+if (remainder == 0)
+	{
+		answer = (char*)malloc(sizeof("Even"));
+		strcpy(answer, "Even");
+	}
+	else
+	{
+		answer = (char*)malloc(sizeof("Odd"));
+		strcpy(answer, "Odd");
+	}
+=> 이렇게 하면 0일 때만 Even으로 들어가게 되므로 나머지가 -가 나와도 문제가 없던것

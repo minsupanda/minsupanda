@@ -1,0 +1,8 @@
+[레벨 1: 자릿수 더하기]
+int answer = 0;
+ string s = to_string(n);
+ for(int i = 0; i < s.size(); i++) answer += (s[i] - '0');
+
+
+<s[i] - '0'>
+s[i]에 들어있는 문자열을 숫자로 바꿔준다(아스키코드)
