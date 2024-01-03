@@ -1,0 +1,141 @@
+// 플레이어 클래스
+[Player] : public GameObject
+- State state;
+- Direction Dir;
+- Vector2 minBounds; // Left, Top
+- Vector2 maxBounds; // Right, Bottom
+- int Inventory[MaxInventory]; // 인벤토리 : 아이템 인덱스 번호로 관리
+- int EquipItem; // 현재 장착 중인 아이템
+- bool pressInteractionKey; // 상호작용 키가 눌러졌는지의 유무(스페이스가 눌러졌는지에 따라 true, false)
+- bool OpenInvectory;
+- SpriteRenderer* Renderer;
+- AnimationComponent* Anim;
+- void Move(const float& deltaTime);
+- void ChangeItem();
+------------------------------------------
++void Initialize();
++void Update(const FLOAT& deltaTime);
++void Draw();
++void StateChange(State changeState) { state = changeState; }
++void Release();
++void pressKeyChange(bool change) { pressInteractionKey = change; }
++bool GetpressInteractionKey() { return pressInteractionKey; }
++bool GetOpenInventory() { return OpenInvectory; }
++RECT* GetRect() { return Renderer->GetRect(); }
++Vector2 GetPos() { return Renderer->GetPos(); }
++Direction GetDir() { return Dir; }
++State GetState() { return state; }
++ void AcquireItem(std::vector<ItemType> items);
+
+
+
+얘를 player에서 변수로 가지고 있게?
+// 인벤토리 클래스
+Inventory :
+- SpriteRenderer* Renderer;
+------------------------------------
++ void ChangeEquipItem()
+
+
+
+
+// 가구 추상 클래스
+absrtact Furniture : public GameObject  // 얘를 상속받아서 각 가구 오브젝트 클래스 만들기
+- FurnitureType* type // 아이템들고 상호작용 할 때 비교 **************************
+- Bitmpa* Image
+- renderer : SpriteRenderer*
+- Quiz* quiz
+std::vector<ItemType> items;
+bool isAcquireItem;
+-----------------------
++virtual  VOID Initialize(); override; // 가구 이미지, 아이템 이미지 불러오고, 컴포넌트 추가시키기
++virtual  VOID Release();override;
++virtual  VOID Update(const FLOAT& deltaTime);override; // 상호작용 되는 지 확인 한 후 업데이트 
++virtual  VOID Draw(); override;
++void QuizStart() { quizStart = true; }
++void QuizEnd() { quizStart = false; quiz->ClearinputAnswer(); }
++RECT* GetRect() { return Renderer->GetRect(); }
++Vector2 GetPos() { return Renderer->GetPos(); }
++bool GetQuizStart() { return quizStart; }
++bool GetQuizClear() { return quiz->GetisClear(); }
++bool GetAcquireItem() { return isAcquireItem; }
++std::vector<ItemType> GetItem() { return items; }
+
+
+// 배치된 사물 오브젝트들
+Phone : public Furniture
+Clock : public Furniture
+Safe :  public Furniture
+StorageCabinet : public Furniture
+
+
+
+// 퀴즈 클래스
+Quiz : public GameObject
+- renderer : SpriteRenderer*
+- std::string Answer // 퀴즈 정답
+- std::string inputAnswer // 내가 입력한 정답
+- bool isClear // 퀴즈 클리어 유무
+-------------------------------
++VOID Initialize()
++VOID Release()
++VOID Update(const FLOAT& deltaTime); //  Furniture update에서 작동하게 하기
++VOID Draw();
++bool GetIsClear()
++ClearinputAnswer() {inputAnswer.clear();} // 내가 입력한 정답 clear(없으면 esc했다 다시 들어가면 이전 답이 남아있음)
+
+
+// 게임 신 클래스
+// GameScene : public Scene
+-enum Data { MaxFurinture = 5, MassageTime = 2 };
+-Bitmap* background = nullptr;
+-Player* player = nullptr;
+-Furniture* Furnitures[MaxFurinture];
+-Furniture* InteractionFurniture = nullptr; // 현재 상호작용 중인 가구
+-UILabel* text = nullptr;
+-UIImage* uiImage = nullptr;
+-float messageTimer;
+-bool PrintTextUI;
+-bool CheckInteraction();
+-bool CheckQuizStart();
+-void SetTextUi();
+-void CheckTextUiTime(const float& deltaTime);
+------------------------------------------
++virtual void Initialize() override;
++virtual void Release() override;
++virtual void Update(const float& deltaTime) override;
++virtual void Draw() override;
++bool GetPrintTextUi() { return PrintTextUI; }
+
+// 게임 매니저 클래스
+// GameManager 
+- Item items[ItemMax];
+---------------------------
++ const GetItem(int index) : item*
+
+// item 구조체
+// struct Item : public GameObject
+SpriteRenderer* Renderer;
+ItemData data;
+
+// 아이템 데이터 구조체
+// struct ItemData
+std::string name; // 문구 출력할 때 사용, 같은 이미지를 두 개 이상 사용할 경우에는, 어떤 이미지를 사용할 지에 대한 데이터 변수도 필요하다
+FurnitureType* Interactiontype// 상호작용 가능한 가구(아이템을 캐릭터가 가지고 있을 때 상효작용 시 이 변수와 해당 가구의 type과 비교해서 사용)
+
+// 가구 타입
+// enum class FurnitureType { Phone, Clock, Safe, Table, Cabinet  }
+
+
+파일 입출력 사용해서 퀴즈 데이터 불러오기
+데이터를 외부에 뺄지 코딩으로 해둘지 구분하기
+
+
+* 뺄 데이터
+Item : bitmap 이미지 리소스 이름, 이름, 상호작용할 가구 타입(FurnitureType )
+Furniture : bitmap 이미지 리소스 이름, 가구 타입(FurnitureType ), 가지고 있을 아이템(item의 name), 퀴즈 데이터(이미지 리소스, 정답)
+player : bitmap 이미지 리소스 이름
+
+
+
+ui이미지가 부모 레이블이 자식으로(둘다 변수로 가지고 있던가 자식을 찾을 수 있으면 이미지만 변수로 가지고 있던가)

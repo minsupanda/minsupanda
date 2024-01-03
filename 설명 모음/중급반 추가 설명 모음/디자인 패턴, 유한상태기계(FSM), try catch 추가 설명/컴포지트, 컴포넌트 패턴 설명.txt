@@ -14,3 +14,14 @@ ex. Character 클래스에 Move, Draw, Attack 등의 기능별 클래스를 넣�
 
 * Compsite에 저장된 Component를 추가하거나 삭제할 수도 있지만 굳이 여러번 반복적으로 
 삭제하고 추가하는 것은 추천되지 않음! 
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+<방탈출 게임>의 Component 클래스
+
+- GameObject가 컴포지트
+- 그 외 나머지 것들이 컴포넌트
+- InputComponont는 딱히 부모 클래스가 필요 없기에 클래스로 만들어둔 것
+
+**GameScene 클래스에서 InputComponent만 따로 사용하려 했는데 안 되는 이유
+ -> Component를 사용하려면 GameObeject를 Incloude해서 포함시켜야 한다
+ -> 하지만 GameScene 클래스에는 포함되어 있지 않았음

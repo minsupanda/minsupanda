@@ -9,7 +9,7 @@ vector<int> solution(string s)
 
     for_each(s.cbegin(), s.cend(), [&bin](const char c) {bin.emplace_back(c == '1'); });  //s를 이진수로 변환
 
-    // [](){} 람다식
+    // [](){} 람다식 https://blockdmask.tistory.com/491
     // emplace_back : 객체를 만들 재료를 넣으면 직접 객체를 만들어서 가지고 있는다. 
     // push_back : 객체를 직접 집어 넣는 것
     // 객체란? c++의 클래스(ex. 쿠키 틀 <-> 인스턴스는 쿠키)
