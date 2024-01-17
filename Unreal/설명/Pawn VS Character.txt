@@ -1,0 +1,4 @@
+<Pawn VS Character>
+- Character에는 무브 컴포넌트가 기본적으로 들어가있다
+- 정적인 NPC라면 Pawn을 동적인 느낌의 몬스터나 NPC라면 Character를 사용한다.
+- Character는 기본적으로 이족보행 인간형을 만드는 것을 지원하기위해 만들었지만 사족보행 등 몬스터도 가능하고 사용한다.
